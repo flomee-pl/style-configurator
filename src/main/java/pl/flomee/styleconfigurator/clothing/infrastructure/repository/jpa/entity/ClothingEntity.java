@@ -25,6 +25,7 @@ public class ClothingEntity {
     public String clothingImageUrl;
     public Long price;
     public String link;
+    public String affiliateLink;
 
     @Enumerated(EnumType.STRING)
     public ClothingPart clothingPart;
@@ -40,10 +41,10 @@ public class ClothingEntity {
     public List<Color> colors;
 
     @Enumerated(EnumType.STRING)
-    public Style style;
+    public List<Style> style;
 
     @Enumerated(EnumType.STRING)
-    public Season season;
+    public List<Season> season;
 
     @ManyToMany(mappedBy = "clothes")
     public List<OutfitEntity> outfits;
