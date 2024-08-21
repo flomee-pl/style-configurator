@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  users-db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    container_name: styleconfigurator
+    environment:
+      POSTGRES_DB: styleconfigurator
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
