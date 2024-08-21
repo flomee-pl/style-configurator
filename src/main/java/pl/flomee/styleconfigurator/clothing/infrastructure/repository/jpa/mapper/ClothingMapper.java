@@ -11,6 +11,5 @@ public interface ClothingMapper {
     @Mapping(target = "outfits", ignore = true)
     ClothingEntity toEntity(Clothing clothing);
 
-    @Mapping(target = "clothingId")
     Clothing toDomain(ClothingEntity clothingEntity);
 }
