@@ -11,17 +11,19 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ClothingService {
-    void addClothing(Clothing clothing);
-
     Optional<Clothing> getClothingById(UUID id);
-
     List<Clothing> listClothing(ClothingPart clothingPart,
                                 Shop shop,
                                 List<Color> color);
+
+    void addClothing(Clothing clothing);
+
 
     void patchClothingById(UUID id, Clothing clothing);
 
     void deleteClothingById(UUID id);
 
     Map<String, List<String>> listFilters();
+
+    List<Clothing> saveAll(List<Clothing> clothes);
 }

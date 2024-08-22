@@ -11,13 +11,13 @@ import java.util.UUID;
 
 public interface OutfitRepository {
 
-    void save(Outfit outfit);
-
     Optional<Outfit> findById(UUID id);
-
-    void deleteById(UUID id);
 
     List<Outfit> listOutfit(Sex sex, List<Season> season, List<Style> style);
 
+    void save(Outfit outfit);
+
     void patchById(UUID id, Outfit outfit);
+
+    void deleteById(UUID id);
 }

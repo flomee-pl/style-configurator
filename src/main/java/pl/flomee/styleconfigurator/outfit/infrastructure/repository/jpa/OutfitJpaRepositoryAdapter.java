@@ -28,18 +28,8 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     private final EntityManager entityManager;
 
     @Override
-    public void save(Outfit outfit) {
-        outfitJpaRepository.save(outfitMapper.toEntity(outfit));
-    }
-
-    @Override
     public Optional<Outfit> findById(UUID id) {
         return outfitJpaRepository.findById(id).map(outfitMapper::toDomain);
-    }
-
-    @Override
-    public void deleteById(UUID id) {
-        outfitJpaRepository.deleteById(id);
     }
 
     @Override
@@ -71,6 +61,11 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     }
 
     @Override
+    public void save(Outfit outfit) {
+        outfitJpaRepository.save(outfitMapper.toEntity(outfit));
+    }
+
+    @Override
     public void patchById(UUID id, Outfit outfit) {
         OutfitEntity outfitEntity = outfitJpaRepository.findById(id)
             .orElseThrow(EntityNotFoundException::new);
@@ -98,5 +93,10 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
         }
 
         outfitJpaRepository.save(outfitEntity);
+    }
+
+    @Override
+    public void deleteById(UUID id) {
+        outfitJpaRepository.deleteById(id);
     }
 }

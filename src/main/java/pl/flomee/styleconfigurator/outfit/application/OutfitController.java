@@ -22,7 +22,8 @@ public class OutfitController {
     @GetMapping("/{id}")
     @ResponseStatus(OK)
     public Outfit getOutfit(@PathVariable UUID id) {
-        return outfitService.getOutfitById(id);
+        return outfitService.getOutfitById(id)
+            .orElseThrow(NotFoundException::new);
     }
 
     @GetMapping

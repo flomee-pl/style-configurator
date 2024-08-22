@@ -17,11 +17,6 @@ public class ClothingFacade implements ClothingService {
     private final ClothingRepository clothingRepository;
 
     @Override
-    public void addClothing(Clothing clothing) {
-        clothingRepository.save(clothing);
-    }
-
-    @Override
     public Optional<Clothing> getClothingById(UUID id) {
         return clothingRepository.findById(id);
     }
@@ -29,6 +24,11 @@ public class ClothingFacade implements ClothingService {
     @Override
     public List<Clothing> listClothing(ClothingPart clothingPart, Shop shop, List<Color> color) {
         return clothingRepository.listClothing(clothingPart, shop, color);
+    }
+
+    @Override
+    public void addClothing(Clothing clothing) {
+        clothingRepository.save(clothing);
     }
 
     @Override
@@ -46,12 +46,14 @@ public class ClothingFacade implements ClothingService {
         Map<String, List<String>> filters = new HashMap<>();
 
         filters.put("Shop", List.of(Arrays.toString(Shop.values())));
-        filters.put("Sex", List.of(Arrays.toString(Sex.values())));
         filters.put("Color", List.of(Arrays.toString(Color.values())));
-        filters.put("Style", List.of(Arrays.toString(Style.values())));
-        filters.put("Season", List.of(Arrays.toString(Season.values())));
 
         return filters;
+    }
+
+    @Override
+    public List<Clothing> saveAll(List<Clothing> clothes) {
+        return clothingRepository.saveAll(clothes);
     }
 
 

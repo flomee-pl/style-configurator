@@ -10,13 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ClothingRepository {
-    void save(Clothing clothing);
-
     Optional<Clothing> findById(UUID id);
-
-    void deleteById(UUID id);
-
-    void patchById(UUID id, Clothing clothing);
 
     List<Clothing> listClothing(ClothingPart clothingPart,
                                 Shop shop,
@@ -24,4 +18,15 @@ public interface ClothingRepository {
                                 List<Color> color
     );
 
+    void save(Clothing clothing);
+
+    void patchById(UUID id, Clothing clothing);
+
+    void deleteById(UUID id);
+
+    void deleteAll();
+
+    List<Clothing> findAll();
+
+    List<Clothing> saveAll(List<Clothing> clothes);
 }
