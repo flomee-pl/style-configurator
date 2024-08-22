@@ -7,13 +7,11 @@ import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.clothing.core.model.ClothingPart;
-import pl.flomee.styleconfigurator.clothing.core.model.attributes.*;
+import pl.flomee.styleconfigurator.clothing.core.model.attributes.Color;
+import pl.flomee.styleconfigurator.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.clothing.core.ports.outgoing.ClothingRepository;
 import pl.flomee.styleconfigurator.clothing.infrastructure.repository.jpa.entity.ClothingEntity;
 import pl.flomee.styleconfigurator.clothing.infrastructure.repository.jpa.mapper.ClothingMapper;
-import pl.flomee.styleconfigurator.outfit.core.model.attributes.Season;
-import pl.flomee.styleconfigurator.outfit.core.model.attributes.Sex;
-import pl.flomee.styleconfigurator.outfit.core.model.attributes.Style;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +27,7 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
 
     @PersistenceContext
     private final EntityManager entityManager;
+
     @Override
     public void save(Clothing clothing) {
         ClothingEntity clothingEntity = clothingMapper.toEntity(clothing);
@@ -38,7 +37,7 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
     @Override
     public Optional<Clothing> findById(UUID id) {
         return clothingJpaRepository.findById(id)
-                .map(clothingMapper::toDomain);
+            .map(clothingMapper::toDomain);
     }
 
     @Override
@@ -52,34 +51,34 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
             .orElseThrow(EntityNotFoundException::new);
 
 
-            if (clothing.getClothingName() != null) {
-                clothingEntity.setClothingName(clothing.getClothingName());
-            }
-            if (clothing.getClothingImageUrl() != null) {
-                clothingEntity.setClothingImageUrl(clothing.getClothingImageUrl());
-            }
-            if (clothing.getPrice() != null) {
-                clothingEntity.setPrice(clothing.getPrice());
-            }
-            if (clothing.getLink() != null) {
-                clothingEntity.setLink(clothing.getLink());
-            }
-            if (clothing.getClothingPart() != null) {
-                clothingEntity.setClothingPart(clothing.getClothingPart());
-            }
-            if (clothing.getShop() != null) {
-                clothingEntity.setShop(clothing.getShop());
-            }
+        if (clothing.getClothingName() != null) {
+            clothingEntity.setClothingName(clothing.getClothingName());
+        }
+        if (clothing.getClothingImageUrl() != null) {
+            clothingEntity.setClothingImageUrl(clothing.getClothingImageUrl());
+        }
+        if (clothing.getPrice() != null) {
+            clothingEntity.setPrice(clothing.getPrice());
+        }
+        if (clothing.getLink() != null) {
+            clothingEntity.setLink(clothing.getLink());
+        }
+        if (clothing.getClothingPart() != null) {
+            clothingEntity.setClothingPart(clothing.getClothingPart());
+        }
+        if (clothing.getShop() != null) {
+            clothingEntity.setShop(clothing.getShop());
+        }
 
-            if (clothing.getColor() != null && !clothing.getColor().isEmpty()) {
-                clothingEntity.setColor(clothing.getColor());
-            }
+        if (clothing.getColor() != null && !clothing.getColor().isEmpty()) {
+            clothingEntity.setColor(clothing.getColor());
+        }
 
-            if (clothing.getOutfits() != null && !clothing.getOutfits().isEmpty()) {
-                clothingEntity.setOutfits(clothing.getOutfits());
-            }
+        if (clothing.getOutfits() != null && !clothing.getOutfits().isEmpty()) {
+            clothingEntity.setOutfits(clothing.getOutfits());
+        }
 
-            clothingJpaRepository.save(clothingEntity);
+        clothingJpaRepository.save(clothingEntity);
 
     }
 
@@ -101,7 +100,6 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
         if (shop != null) {
             predicates.add(cb.equal(clothing.get("shop"), shop));
         }
-
 
 
         if (colors != null && !colors.isEmpty()) {

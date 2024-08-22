@@ -2,7 +2,6 @@ package pl.flomee.styleconfigurator.outfit.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.flomee.styleconfigurator.clothing.core.ports.incoming.ClothingService;
 import pl.flomee.styleconfigurator.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.outfit.core.model.attributes.Sex;
@@ -35,6 +34,7 @@ public class OutfitController {
     ) {
         return outfitService.listOutfit(sex, season, style);
     }
+
     @PostMapping
     @ResponseStatus(OK)
     public void addOutfit(@RequestBody Outfit outfit) {

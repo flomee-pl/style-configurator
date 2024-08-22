@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.clothing.core.model.ClothingPart;
-import pl.flomee.styleconfigurator.clothing.core.model.attributes.*;
+import pl.flomee.styleconfigurator.clothing.core.model.attributes.Color;
+import pl.flomee.styleconfigurator.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.clothing.core.ports.incoming.ClothingService;
-import pl.flomee.styleconfigurator.outfit.core.model.attributes.Season;
-import pl.flomee.styleconfigurator.outfit.core.model.attributes.Sex;
-import pl.flomee.styleconfigurator.outfit.core.model.attributes.Style;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,12 +33,12 @@ public class ClothingController {
         @RequestParam(required = false) ClothingPart clothingPart,
         @RequestParam(required = false) Shop shop,
         @RequestParam(required = false) List<Color> color
-        ) {
+    ) {
         return clothingService.listClothing(
             clothingPart,
             shop,
             color
-            );
+        );
     }
 
     @PostMapping
