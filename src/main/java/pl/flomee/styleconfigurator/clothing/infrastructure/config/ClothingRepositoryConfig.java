@@ -1,5 +1,6 @@
 package pl.flomee.styleconfigurator.clothing.infrastructure.config;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.flomee.styleconfigurator.clothing.core.ports.outgoing.ClothingRepository;
@@ -12,8 +13,9 @@ public class ClothingRepositoryConfig {
 
     @Bean
     public ClothingRepository clothingRepository(ClothingMapper clothingMapper,
-                                                 ClothingJpaRepository clothingJpaRepository){
-        return new ClothingJpaRepositoryAdapter(clothingMapper, clothingJpaRepository);
+                                                 ClothingJpaRepository clothingJpaRepository,
+                                                 EntityManager entityManager){
+        return new ClothingJpaRepositoryAdapter(clothingMapper, clothingJpaRepository,entityManager);
     }
 
 

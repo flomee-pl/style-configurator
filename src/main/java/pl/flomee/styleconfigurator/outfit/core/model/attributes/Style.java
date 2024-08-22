@@ -1,4 +1,4 @@
-package pl.flomee.styleconfigurator.clothing.core.model.categories;
+package pl.flomee.styleconfigurator.outfit.core.model.attributes;
 
 public enum Style {
     CASUAL,

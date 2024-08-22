@@ -2,7 +2,10 @@ package pl.flomee.styleconfigurator.clothing.core.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.flomee.styleconfigurator.clothing.core.model.categories.*;
+import pl.flomee.styleconfigurator.clothing.core.model.attributes.*;
+import pl.flomee.styleconfigurator.outfit.core.model.attributes.Season;
+import pl.flomee.styleconfigurator.outfit.core.model.attributes.Sex;
+import pl.flomee.styleconfigurator.outfit.core.model.attributes.Style;
 import pl.flomee.styleconfigurator.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
 
 import java.util.List;
@@ -19,9 +22,6 @@ public class Clothing {
     public String affiliateLink;
     public ClothingPart clothingPart;
     public Shop shop;
-    public Sex sex;
-    public List<Color> colors;
-    public List<Style> style;
-    public List<Season> season;
+    public List<Color> color;
     public List<OutfitEntity> outfits;
 }
