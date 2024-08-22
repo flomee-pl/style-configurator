@@ -1,8 +1,8 @@
 package pl.flomee.styleconfigurator.outfit.infrastructure.repository.jpa;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.outfit.core.model.Outfit;

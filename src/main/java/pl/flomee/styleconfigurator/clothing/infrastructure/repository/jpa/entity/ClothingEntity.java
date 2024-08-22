@@ -1,14 +1,9 @@
 package pl.flomee.styleconfigurator.clothing.infrastructure.repository.jpa.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.validator.constraints.UniqueElements;
 import pl.flomee.styleconfigurator.clothing.core.model.ClothingPart;
 import pl.flomee.styleconfigurator.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.clothing.core.model.attributes.Shop;

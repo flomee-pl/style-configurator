@@ -1,12 +1,8 @@
 package pl.flomee.styleconfigurator.outfit.core;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.clothing.core.model.attributes.Color;
-import pl.flomee.styleconfigurator.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.clothing.core.ports.incoming.ClothingService;
-import pl.flomee.styleconfigurator.clothing.infrastructure.repository.jpa.entity.ClothingEntity;
 import pl.flomee.styleconfigurator.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.outfit.core.model.attributes.Sex;
@@ -15,7 +11,6 @@ import pl.flomee.styleconfigurator.outfit.core.ports.incoming.OutfitService;
 import pl.flomee.styleconfigurator.outfit.core.ports.outgoing.OutfitRepository;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class OutfitFacade implements OutfitService {
