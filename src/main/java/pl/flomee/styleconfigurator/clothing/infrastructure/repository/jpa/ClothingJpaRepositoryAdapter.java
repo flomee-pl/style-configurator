@@ -89,7 +89,7 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
         if (clothing.getShop() != null) {
             clothingEntity.setShop(clothing.getShop());
         }
-        if (!clothing.getColor().isEmpty()) {
+        if (clothing.getColor() != null && !clothing.getColor().isEmpty()) {
             clothingEntity.setColor(clothing.getColor());
         }
         if (clothing.getOutfits() != null && !clothing.getOutfits().isEmpty()) {

@@ -1,8 +1,6 @@
 package pl.flomee.styleconfigurator.outfit.core;
 
 import lombok.RequiredArgsConstructor;
-import pl.flomee.styleconfigurator.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.clothing.core.ports.incoming.ClothingService;
 import pl.flomee.styleconfigurator.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.outfit.core.model.attributes.Sex;
@@ -15,7 +13,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class OutfitFacade implements OutfitService {
     private final OutfitRepository outfitRepository;
-    private final ClothingService clothingService;
     @Override
     public Optional<Outfit> getOutfitById(UUID id) {
         return outfitRepository.findById(id);
@@ -28,26 +25,6 @@ public class OutfitFacade implements OutfitService {
 
     @Override
     public void addOutfit(Outfit outfit) {
-        List<Clothing> existingClothes = new ArrayList<>();
-        List<Clothing> newClothes = new ArrayList<>();
-
-        for (Clothing clothing : outfit.getClothes()) {
-            if (clothing.getClothingId() != null &&
-                clothingService.getClothingById(clothing.getClothingId()).isPresent()) {
-                existingClothes.add(clothingService.getClothingById(clothing.getClothingId()).get());
-            } else {
-                newClothes.add(clothing);
-            }
-        }
-
-        List<Clothing> savedNewClothes = clothingService.saveAll(newClothes);
-
-        List<Clothing> combinedClothes = new ArrayList<>();
-        combinedClothes.addAll(existingClothes);
-        combinedClothes.addAll(savedNewClothes);
-
-        outfit.setClothes(combinedClothes);
-
         outfitRepository.save(outfit);
     }
 
