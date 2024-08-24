@@ -1,6 +1,7 @@
 package pl.flomee.styleconfigurator.outfit.application;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.outfit.core.model.attributes.Season;
@@ -38,13 +39,13 @@ public class OutfitController {
 
     @PostMapping
     @ResponseStatus(OK)
-    public void addOutfit(@RequestBody Outfit outfit) {
+    public void addOutfit(@Validated @RequestBody Outfit outfit) {
         outfitService.addOutfit(outfit);
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(OK)
-    public void updateOutfitPatchById(@PathVariable UUID id, @RequestBody Outfit outfit) {
+    public void updateOutfitPatchById(@PathVariable UUID id, @Validated @RequestBody Outfit outfit) {
         outfitService.patchOutfitById(id, outfit);
     }
 
