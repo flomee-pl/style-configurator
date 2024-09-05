@@ -27,6 +27,7 @@ CREATE TABLE outfits
 (
     outfit_id        UUID PRIMARY KEY,
     is_active        BOOLEAN      NOT NULL,
+    created_at       TIMESTAMP    NOT NULL,
     description      VARCHAR(255) NOT NULL,
     outfit_image_url VARCHAR(255) NOT NULL,
     outfit_name      VARCHAR(255) NOT NULL,

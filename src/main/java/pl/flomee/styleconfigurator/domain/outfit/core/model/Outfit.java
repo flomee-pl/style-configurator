@@ -9,6 +9,7 @@ import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Style;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +40,9 @@ public class Outfit {
 
     @NotNull
     public Boolean isActive;
+
+    public LocalDateTime createdAt;
+
     @JsonIgnoreProperties("outfits")
     public List<Clothing> clothes;
 }

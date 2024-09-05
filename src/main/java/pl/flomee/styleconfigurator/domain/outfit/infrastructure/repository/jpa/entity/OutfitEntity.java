@@ -11,6 +11,7 @@ import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Style;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,6 +52,14 @@ public class OutfitEntity {
 
     @NotNull
     public Boolean isActive;
+
+    public LocalDateTime createdAt;
+    @PrePersist
+    protected void prePersist() {
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
+        }
+    }
 
     @ManyToMany()
     @JoinTable(
