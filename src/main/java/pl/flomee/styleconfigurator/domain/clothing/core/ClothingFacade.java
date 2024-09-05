@@ -9,6 +9,7 @@ import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingS
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.outgoing.ClothingRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class ClothingFacade implements ClothingService {
@@ -40,13 +41,28 @@ public class ClothingFacade implements ClothingService {
     }
 
     @Override
-    public Map<String, List<String>> listFilters() {
+    public Map<String, List<String>> listFilters(String language) {
         Map<String, List<String>> filters = new HashMap<>();
 
-        filters.put("Shop", List.of(Arrays.toString(Shop.values())));
-        filters.put("Color", List.of(Arrays.toString(Color.values())));
+        filters.put("Shop", mapEnumValues(Shop.values(), language));
+        filters.put("Color", mapEnumValues(Color.values(), language));
 
         return filters;
+    }
+
+    private <E extends Enum<E>> List<String> mapEnumValues(E[] enumValues, String language) {
+        return Arrays.stream(enumValues)
+            .map(value -> "PL".equalsIgnoreCase(language) ? toPolish(value) : value.name())
+            .collect(Collectors.toList());
+    }
+
+    private String toPolish(Enum<?> enumValue) {
+        if (enumValue instanceof Shop) {
+            return ((Shop) enumValue).toPolish();
+        } else if (enumValue instanceof Color) {
+            return ((Color) enumValue).toPolish();
+        }
+        return enumValue.name();  // defaultowo zwraca nazwę angielską
     }
 
     @Override

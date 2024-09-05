@@ -2,6 +2,7 @@ package pl.flomee.styleconfigurator.domain.clothing.application.web;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;
 
@@ -16,7 +17,8 @@ public class ClothingAttributesController implements IClothingAttributesControll
     private final ClothingService clothingService;
 
     @Override
-    public Map<String, List<String>> getCategories() {
-        return clothingService.listFilters();
+    public Map<String, List<String>> getCategories(
+        @RequestParam(required = false, defaultValue = "EN") String language) {
+        return clothingService.listFilters(language);
     }
 }

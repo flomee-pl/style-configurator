@@ -9,6 +9,7 @@ import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Style;
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.incoming.OutfitService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class OutfitFacade implements OutfitService {
@@ -39,13 +40,30 @@ public class OutfitFacade implements OutfitService {
     }
 
     @Override
-    public Map<String, List<String>> listFilters() {
+    public Map<String, List<String>> listFilters(String language) {
         Map<String, List<String>> filters = new HashMap<>();
 
-        filters.put("Sex", List.of(Arrays.toString(Sex.values())));
-        filters.put("Style", List.of(Arrays.toString(Style.values())));
-        filters.put("Season", List.of(Arrays.toString(Season.values())));
+        filters.put("Sex", mapEnumValues(Sex.values(), language));
+        filters.put("Style", mapEnumValues(Style.values(), language));
+        filters.put("Season", mapEnumValues(Season.values(), language));
 
         return filters;
+    }
+
+    private <E extends Enum<E>> List<String> mapEnumValues(E[] enumValues, String language) {
+        return Arrays.stream(enumValues)
+            .map(value -> "PL".equalsIgnoreCase(language) ? toPolish(value) : value.name())
+            .collect(Collectors.toList());
+    }
+
+    private String toPolish(Enum<?> enumValue) {
+        if (enumValue instanceof Season) {
+            return ((Season) enumValue).toPolish();
+        } else if (enumValue instanceof Sex) {
+            return ((Sex) enumValue).toPolish();
+        } else if (enumValue instanceof Style) {
+            return ((Style) enumValue).toPolish();
+        }
+        return enumValue.name();  // defaultowo zwraca nazwę angielską
     }
 }

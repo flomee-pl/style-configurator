@@ -6,5 +6,24 @@ public enum Style {
     ELEGANT,
     STREETWEAR,
     SMART,
-    FORMAL
+    FORMAL;
+
+    public String toPolish() {
+        switch (this) {
+            case CASUAL:
+                return "CODZIENNY";
+            case SPORT:
+                return "SPORTOWY";
+            case ELEGANT:
+                return "ELEGANCKI";
+            case STREETWEAR:
+                return "ULICZNY";
+            case SMART:
+                return "SCHLUDNY";
+            case FORMAL:
+                return "FORMALNY";
+            default:
+                return this.name();
+        }
+    }
 }

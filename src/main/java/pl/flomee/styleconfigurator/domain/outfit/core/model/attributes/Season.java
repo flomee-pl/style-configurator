@@ -4,5 +4,20 @@ public enum Season {
     WINTER,
     SPRING,
     SUMMER,
-    AUTUMN
+    AUTUMN;
+
+    public String toPolish() {
+        switch (this) {
+            case WINTER:
+                return "ZIMA";
+            case SPRING:
+                return "WIOSNA";
+            case SUMMER:
+                return "LATO";
+            case AUTUMN:
+                return "JESIEŃ";
+            default:
+                return this.name();
+        }
+    }
 }

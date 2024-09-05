@@ -23,7 +23,7 @@ public interface ClothingService {
 
     void deleteClothingById(UUID id);
 
-    Map<String, List<String>> listFilters();
+    Map<String, List<String>> listFilters(String language);
 
     List<Clothing> saveAll(List<Clothing> clothes);
 }

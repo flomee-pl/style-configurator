@@ -21,5 +21,5 @@ public interface OutfitService {
 
     void deleteOutfitById(UUID id);
 
-    Map<String, List<String>> listFilters();
+    Map<String, List<String>> listFilters(String language);
 }
