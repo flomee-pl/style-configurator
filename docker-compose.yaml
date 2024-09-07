@@ -1,12 +1,33 @@
 version: '3.8'
 
 services:
-  users-db:
-    image: postgres
+  style-configurator:
+    container_name: styleConfigurator
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5432:5432"
-    container_name: styleconfigurator
+      - "8080:8080"
+    environment:
+      DB_URL: "db:5432/styleconfigurator"
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - db_network
+
+  db:
+    image: postgres
+    container_name: db-styleconfigurator
     environment:
       POSTGRES_DB: styleconfigurator
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - db_network
+
+networks:
+  db_network:
+    driver: bridge
+    name: db_network
