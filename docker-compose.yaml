@@ -24,10 +24,17 @@ services:
       POSTGRES_DB: styleconfigurator
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db-styleconfigurator-data:/var/lib/postgresql/data
     networks:
       - db_network
+
 
 networks:
   db_network:
     driver: bridge
     name: db_network
+
+volumes:
+  db-styleconfigurator-data:
+    driver: local
