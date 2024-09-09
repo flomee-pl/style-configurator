@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
+import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
 import jakarta.validation.constraints.NotNull;
 
@@ -49,5 +50,6 @@ public class Clothing {
     public List<Color> color;
 
     @JsonIgnoreProperties("clothes")
-    public List<OutfitEntity> outfits;
+    public List<Outfit> outfits;
+
 }

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
@@ -55,6 +56,17 @@ public interface IOutfitController {
     @ResponseStatus(OK)
     void addOutfit(
         @Parameter(description = "Details of the outfit to create", required = true) @Validated @RequestBody Outfit outfit);
+
+    @Operation(summary = "Add clothes to an outfit by ID", description = "Add clothes to an existing outfit by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Clothes added to outfit successfully"),
+        @ApiResponse(responseCode = "404", description = "Outfit not found")
+    })
+    @PostMapping("{id}")
+    @ResponseStatus(OK)
+    void addClothesToOutfit(
+        @Parameter(description = "ID of the outfit to add clothes to", required = true) @PathVariable UUID id,
+        @Parameter(description = "List of clothes IDs to be added to outfit item", required = true) @RequestBody AddClothesRequest clothes);
 
     @Operation(summary = "Update an outfit by ID", description = "Update specific details of an existing outfit by its ID, it overwrites the existing data")
     @ApiResponses(value = {

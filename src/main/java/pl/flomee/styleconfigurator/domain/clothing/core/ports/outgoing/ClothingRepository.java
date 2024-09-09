@@ -1,9 +1,11 @@
 package pl.flomee.styleconfigurator.domain.clothing.core.ports.outgoing;
 
+import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
+import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,4 +31,6 @@ public interface ClothingRepository {
     List<Clothing> findAll();
 
     List<Clothing> saveAll(List<Clothing> clothes);
+
+    void addOutfitsToClothing(UUID id, AddOutfitsRequest outfits);
 }

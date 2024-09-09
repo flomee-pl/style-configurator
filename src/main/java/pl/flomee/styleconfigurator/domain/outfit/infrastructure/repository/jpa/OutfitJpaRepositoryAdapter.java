@@ -5,9 +5,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;
-import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingMapper;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.ClothingJpaRepository;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.ClothingEntity;
+import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
@@ -26,8 +26,7 @@ import java.util.stream.Collectors;
 public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     private final OutfitMapper outfitMapper;
     private final OutfitJpaRepository outfitJpaRepository;
-    private final ClothingService clothingService;
-    private final ClothingMapper clothingMapper;
+    private final ClothingJpaRepository clothingJpaRepository;
 
     @PersistenceContext
     private final EntityManager entityManager;
@@ -67,7 +66,6 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
 
     @Override
     public void save(Outfit outfit) {
-        outfit.setClothes(saveClothes(outfit.getClothes()));
         outfitJpaRepository.save(outfitMapper.toEntity(outfit));
     }
 
@@ -97,40 +95,29 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
         if (outfit.getIsActive() != null) {
             outfitEntity.setIsActive(outfit.getIsActive());
         }
-        if (outfit.getClothes() != null && !outfit.getClothes().isEmpty()) {
-            List<Clothing> updatedClothes = saveClothes(outfit.getClothes());
-            outfitEntity.getClothes().clear();
-            outfitEntity.getClothes().addAll(updatedClothes.stream().map(clothingMapper::toEntity).toList());
-        }
-
         outfitJpaRepository.save(outfitEntity);
     }
 
-    public List<Clothing> saveClothes(List<Clothing> clothes) {
-        List<Clothing> existingClothes = new ArrayList<>();
-        List<Clothing> newClothes = new ArrayList<>();
-
-        for (Clothing clothing : clothes) {
-            if (clothing.getClothingId() != null &&
-                clothingService.getClothingById(clothing.getClothingId()).isPresent()) {
-                existingClothes.add(clothingService.getClothingById(clothing.getClothingId()).get());
-            } else {
-                newClothes.add(clothing);
-            }
-        }
-
-        List<Clothing> savedNewClothes = clothingService.saveAll(newClothes);
-
-        List<Clothing> combinedClothes = new ArrayList<>();
-        combinedClothes.addAll(existingClothes);
-        combinedClothes.addAll(savedNewClothes);
-
-        clothingService.saveAll(combinedClothes);
-        return combinedClothes;
-    }
 
     @Override
     public void deleteById(UUID id) {
         outfitJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public void addClothesToOutfit(UUID id, AddClothesRequest clothes) {
+        OutfitEntity outfitEntity = outfitJpaRepository.findById(id)
+            .orElseThrow(EntityNotFoundException::new);
+
+        List<ClothingEntity> clothingEntities = clothingJpaRepository.findAllById(clothes.getClothesIds());
+
+        clothingEntities.forEach(clothingEntity -> {
+            if (!outfitEntity.getClothes().contains(clothingEntity)) {
+                outfitEntity.getClothes().add(clothingEntity);
+                clothingEntity.getOutfits().add(outfitEntity);
+            }
+        });
+
+        outfitJpaRepository.save(outfitEntity);
     }
 }

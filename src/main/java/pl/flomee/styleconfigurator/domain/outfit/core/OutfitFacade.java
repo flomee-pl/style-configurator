@@ -1,6 +1,7 @@
 package pl.flomee.styleconfigurator.domain.outfit.core;
 
 import lombok.RequiredArgsConstructor;
+import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.outgoing.OutfitRepository;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
@@ -48,6 +49,11 @@ public class OutfitFacade implements OutfitService {
         filters.put("Season", mapEnumValues(Season.values(), language));
 
         return filters;
+    }
+
+    @Override
+    public void addClothesToOutfit(UUID id, AddClothesRequest clothesRequest) {
+        outfitRepository.addClothesToOutfit(id, clothesRequest);
     }
 
     private <E extends Enum<E>> List<String> mapEnumValues(E[] enumValues, String language) {

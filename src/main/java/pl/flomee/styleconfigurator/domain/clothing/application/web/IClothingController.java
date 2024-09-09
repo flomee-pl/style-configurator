@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
+import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
@@ -54,6 +55,18 @@ public interface IClothingController {
     @ResponseStatus(OK)
     void addClothing(@Parameter(description = "Details of the clothing item to be created", required = true)
                      @RequestBody Clothing clothing);
+
+    @Operation(summary = "Add outfits to clothing", description = "Add outfits to an existing clothing item by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Outfits added to clothing item successfully"),
+        @ApiResponse(responseCode = "404", description = "Clothing item not found")
+    })
+    @PostMapping("/{id}")
+    @ResponseStatus(OK)
+    void addOutfitsToClothing(@Parameter(description = "UUID of the clothing item", required = true)
+                              @PathVariable UUID id,
+                              @Parameter(description = "List of outfit IDs to be added to the clothing item", required = true)
+                              @RequestBody AddOutfitsRequest outfits);
 
     @Operation(summary = "Update clothing item", description = "Patch an existing clothing item by its ID")
     @ApiResponses(value = {
