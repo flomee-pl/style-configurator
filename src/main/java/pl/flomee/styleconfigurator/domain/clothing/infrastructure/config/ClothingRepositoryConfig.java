@@ -7,6 +7,7 @@ import pl.flomee.styleconfigurator.domain.clothing.core.ports.outgoing.ClothingR
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.ClothingJpaRepository;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.ClothingJpaRepositoryAdapter;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingMapper;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.OutfitJpaRepository;
 
 @Configuration
@@ -16,8 +17,9 @@ public class ClothingRepositoryConfig {
     public ClothingRepository clothingRepository(ClothingMapper clothingMapper,
                                                  ClothingJpaRepository clothingJpaRepository,
                                                  OutfitJpaRepository outfitJpaRepository,
+                                                 OutfitMapper outfitMapper,
                                                  EntityManager entityManager){
-        return new ClothingJpaRepositoryAdapter(clothingMapper, clothingJpaRepository, outfitJpaRepository, entityManager);
+        return new ClothingJpaRepositoryAdapter(clothingMapper, clothingJpaRepository, outfitJpaRepository, outfitMapper, entityManager);
     }
 
 

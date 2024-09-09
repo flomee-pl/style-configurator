@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.domain.clothing.application.exception.NotFoundException;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
+import pl.flomee.styleconfigurator.domain.clothing.application.web.response.GetClothingOutfits;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 
 import java.util.List;
 import java.util.UUID;
@@ -38,6 +38,11 @@ public class ClothingController implements IClothingController {
             shop,
             color
         );
+    }
+
+    @Override
+    public GetClothingOutfits getClothingOutfitsById(UUID id) {
+        return clothingService.getClothingOutfitsById(id);
     }
 
     @Override

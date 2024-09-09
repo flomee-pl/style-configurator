@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
+import pl.flomee.styleconfigurator.domain.clothing.application.web.response.GetClothingOutfits;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
@@ -45,6 +46,19 @@ public interface IClothingController {
         @Parameter(description = "Clothing part to filter by") @RequestParam(required = false) ClothingPart clothingPart,
         @Parameter(description = "Shop to filter by") @RequestParam(required = false) Shop shop,
         @Parameter(description = "Colors to filter by") @RequestParam(required = false) List<Color> color
+    );
+
+    @Operation(summary = "Get outfits for clothing", description = "Retrieve a list of outfits for a clothing item by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved list of outfits for clothing item",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = GetClothingOutfits.class))),
+        @ApiResponse(responseCode = "404", description = "Clothing item not found")
+    })
+    @GetMapping("/outfits/{id}")
+    @ResponseStatus(OK)
+    GetClothingOutfits getClothingOutfitsById(
+        @Parameter(description = "UUID of the clothing item", required = true)
+        @PathVariable UUID id
     );
 
     @Operation(summary = "Add new clothing", description = "Create a new clothing item")

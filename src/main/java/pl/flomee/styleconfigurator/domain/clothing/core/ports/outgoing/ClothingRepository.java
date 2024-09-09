@@ -33,4 +33,6 @@ public interface ClothingRepository {
     List<Clothing> saveAll(List<Clothing> clothes);
 
     void addOutfitsToClothing(UUID id, AddOutfitsRequest outfits);
+
+    List<Outfit> getClothingOutfitsById(UUID id);
 }

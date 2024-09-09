@@ -8,7 +8,7 @@ import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.e
 @Mapper(componentModel = "spring")
 public interface OutfitMapper {
 
-    @Mapping(target = "clothes", ignore = true)
+    @Mapping(target = "clothes")
     OutfitEntity toEntity(Outfit outfit);
 
     @Mapping(target = "clothes", ignore = true)

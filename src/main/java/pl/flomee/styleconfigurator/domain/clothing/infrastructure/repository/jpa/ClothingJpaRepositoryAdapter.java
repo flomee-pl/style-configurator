@@ -13,6 +13,8 @@ import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.outgoing.ClothingRepository;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.ClothingEntity;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingMapper;
+import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.OutfitJpaRepository;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
 
@@ -28,6 +30,7 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
     private final ClothingMapper clothingMapper;
     private final ClothingJpaRepository clothingJpaRepository;
     private final OutfitJpaRepository outfitJpaRepository;
+    private final OutfitMapper outfitMapper;
 
     @PersistenceContext
     private final EntityManager entityManager;
@@ -144,5 +147,12 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
         });
 
         clothingJpaRepository.save(clothingEntity);
+    }
+
+    @Override
+    public List<Outfit> getClothingOutfitsById(UUID id) {
+        ClothingEntity clothingEntity = clothingJpaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return clothingEntity.getOutfits().stream().map(outfitMapper::toDomain).toList();
+
     }
 }

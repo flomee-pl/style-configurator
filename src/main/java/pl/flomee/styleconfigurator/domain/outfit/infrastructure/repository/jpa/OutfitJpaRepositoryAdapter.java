@@ -5,8 +5,10 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
+import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.ClothingJpaRepository;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.ClothingEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingMapper;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
@@ -27,6 +29,7 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     private final OutfitMapper outfitMapper;
     private final OutfitJpaRepository outfitJpaRepository;
     private final ClothingJpaRepository clothingJpaRepository;
+    private final ClothingMapper clothingMapper;
 
     @PersistenceContext
     private final EntityManager entityManager;
@@ -119,5 +122,12 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
         });
 
         outfitJpaRepository.save(outfitEntity);
+    }
+
+    @Override
+    public List<Clothing> getOutfitClothesById(UUID id) {
+        OutfitEntity outfitEntity = outfitJpaRepository.findById(id)
+            .orElseThrow(EntityNotFoundException::new);
+        return outfitEntity.getClothes().stream().map(clothingMapper::toDomain).toList();
     }
 }

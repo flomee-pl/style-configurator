@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.domain.outfit.application.exception.NotFoundException;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
+import pl.flomee.styleconfigurator.domain.outfit.application.web.response.GetOutfitClothes;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
@@ -33,6 +34,11 @@ public class OutfitController implements IOutfitController {
         @RequestParam(required = false) List<Style> style
     ) {
         return outfitService.listOutfit(sex, season, style);
+    }
+
+    @Override
+    public GetOutfitClothes getOutfitClothesById(UUID id) {
+        return outfitService.getOutfitClothesById(id);
     }
 
     @Override
