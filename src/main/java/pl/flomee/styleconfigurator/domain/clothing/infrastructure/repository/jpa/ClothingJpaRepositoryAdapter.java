@@ -69,9 +69,9 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
     }
 
     @Override
-    public void save(Clothing clothing) {
+    public Clothing save(Clothing clothing) {
         ClothingEntity clothingEntity = clothingMapper.toEntity(clothing);
-        clothingJpaRepository.save(clothingEntity);
+        return clothingMapper.toDomain(clothingJpaRepository.save(clothingEntity));
     }
 
     @Override

@@ -20,6 +20,8 @@ services:
   db:
     image: postgres
     container_name: db-styleconfigurator
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: styleconfigurator
       POSTGRES_USER: ${POSTGRES_USER}

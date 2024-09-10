@@ -27,8 +27,8 @@ public class OutfitFacade implements OutfitService {
     }
 
     @Override
-    public void addOutfit(Outfit outfit) {
-        outfitRepository.save(outfit);
+    public Outfit addOutfit(Outfit outfit) {
+        return outfitRepository.save(outfit);
     }
 
     @Override

@@ -28,8 +28,8 @@ public class ClothingFacade implements ClothingService {
     }
 
     @Override
-    public void addClothing(Clothing clothing) {
-        clothingRepository.save(clothing);
+    public Clothing addClothing(Clothing clothing) {
+        return clothingRepository.save(clothing);
     }
 
     @Override

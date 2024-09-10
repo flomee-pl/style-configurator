@@ -20,7 +20,7 @@ public interface ClothingRepository {
                                 List<Color> color
     );
 
-    void save(Clothing clothing);
+    Clothing save(Clothing clothing);
 
     void patchById(UUID id, Clothing clothing);
 

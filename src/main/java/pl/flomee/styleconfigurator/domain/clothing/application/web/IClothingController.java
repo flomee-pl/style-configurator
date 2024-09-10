@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
+import pl.flomee.styleconfigurator.domain.clothing.application.web.response.ClothingIdResponse;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.response.GetClothingOutfits;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
@@ -63,11 +64,12 @@ public interface IClothingController {
 
     @Operation(summary = "Add new clothing", description = "Create a new clothing item")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Clothing item created successfully")
+        @ApiResponse(responseCode = "200", description = "Clothing item created successfully", content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = ClothingIdResponse.class)))
     })
     @PostMapping
     @ResponseStatus(OK)
-    void addClothing(@Parameter(description = "Details of the clothing item to be created", required = true)
+    ClothingIdResponse addClothing(@Parameter(description = "Details of the clothing item to be created", required = true)
                      @RequestBody Clothing clothing);
 
     @Operation(summary = "Add outfits to clothing", description = "Add outfits to an existing clothing item by its ID")

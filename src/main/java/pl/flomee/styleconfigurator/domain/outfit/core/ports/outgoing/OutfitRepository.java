@@ -17,7 +17,7 @@ public interface OutfitRepository {
 
     List<Outfit> listOutfit(Sex sex, List<Season> season, List<Style> style);
 
-    void save(Outfit outfit);
+    Outfit save(Outfit outfit);
 
     void patchById(UUID id, Outfit outfit);
 

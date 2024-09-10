@@ -17,7 +17,7 @@ public interface OutfitService {
 
     List<Outfit> listOutfit(Sex sex, List<Season> season, List<Style> style);
 
-    void addOutfit(Outfit outfit);
+    Outfit addOutfit(Outfit outfit);
 
     void patchOutfitById(UUID id, Outfit outfit);
 

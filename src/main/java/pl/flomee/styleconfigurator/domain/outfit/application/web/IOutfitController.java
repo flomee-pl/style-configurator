@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.GetOutfitClothes;
+import pl.flomee.styleconfigurator.domain.outfit.application.web.response.OutfitIdResponse;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
@@ -67,7 +68,7 @@ public interface IOutfitController {
     })
     @PostMapping
     @ResponseStatus(OK)
-    void addOutfit(
+    OutfitIdResponse addOutfit(
         @Parameter(description = "Details of the outfit to create", required = true) @Validated @RequestBody Outfit outfit);
 
     @Operation(summary = "Add clothes to an outfit by ID", description = "Add clothes to an existing outfit by its ID")

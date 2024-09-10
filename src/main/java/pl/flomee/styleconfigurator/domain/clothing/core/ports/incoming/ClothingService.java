@@ -18,7 +18,7 @@ public interface ClothingService {
                                 Shop shop,
                                 List<Color> color);
 
-    void addClothing(Clothing clothing);
+    Clothing addClothing(Clothing clothing);
 
 
     void patchClothingById(UUID id, Clothing clothing);

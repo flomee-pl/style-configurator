@@ -68,8 +68,8 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     }
 
     @Override
-    public void save(Outfit outfit) {
-        outfitJpaRepository.save(outfitMapper.toEntity(outfit));
+    public Outfit save(Outfit outfit) {
+        return outfitMapper.toDomain(outfitJpaRepository.save(outfitMapper.toEntity(outfit)));
     }
 
     @Override

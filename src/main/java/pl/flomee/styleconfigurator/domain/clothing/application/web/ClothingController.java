@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.domain.clothing.application.exception.NotFoundException;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
+import pl.flomee.styleconfigurator.domain.clothing.application.web.response.ClothingIdResponse;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.response.GetClothingOutfits;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
@@ -46,8 +47,10 @@ public class ClothingController implements IClothingController {
     }
 
     @Override
-    public void addClothing(@RequestBody Clothing clothing) {
-        clothingService.addClothing(clothing);
+    public ClothingIdResponse addClothing(@RequestBody Clothing clothing) {
+        Clothing savedClothing = clothingService.addClothing(clothing);
+        return new ClothingIdResponse(savedClothing.getClothingId());
+
     }
 
     @Override
