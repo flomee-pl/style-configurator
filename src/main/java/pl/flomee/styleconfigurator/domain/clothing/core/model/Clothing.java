@@ -3,10 +3,10 @@ package pl.flomee.styleconfigurator.domain.clothing.core.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
-import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;

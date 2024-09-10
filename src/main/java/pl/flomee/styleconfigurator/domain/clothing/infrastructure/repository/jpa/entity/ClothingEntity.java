@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.ClothingPart;
+import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;

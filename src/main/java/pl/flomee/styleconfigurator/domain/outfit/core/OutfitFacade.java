@@ -45,9 +45,9 @@ public class OutfitFacade implements OutfitService {
     public Map<String, List<String>> listFilters(String language) {
         Map<String, List<String>> filters = new HashMap<>();
 
-        filters.put("Sex", mapEnumValues(Sex.values(), language));
-        filters.put("Style", mapEnumValues(Style.values(), language));
-        filters.put("Season", mapEnumValues(Season.values(), language));
+        filters.put("sex", mapEnumValues(Sex.values(), language));
+        filters.put("style", mapEnumValues(Style.values(), language));
+        filters.put("season", mapEnumValues(Season.values(), language));
 
         return filters;
     }

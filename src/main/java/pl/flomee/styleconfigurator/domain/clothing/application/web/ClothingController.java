@@ -6,7 +6,7 @@ import pl.flomee.styleconfigurator.domain.clothing.application.exception.NotFoun
 import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.response.GetClothingOutfits;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.ClothingPart;
+import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;

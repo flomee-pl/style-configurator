@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.response.GetClothingOutfits;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.ClothingPart;
+import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;
@@ -46,8 +46,9 @@ public class ClothingFacade implements ClothingService {
     public Map<String, List<String>> listFilters(String language) {
         Map<String, List<String>> filters = new HashMap<>();
 
-        filters.put("Shop", mapEnumValues(Shop.values(), language));
-        filters.put("Color", mapEnumValues(Color.values(), language));
+        filters.put("shop", mapEnumValues(Shop.values(), language));
+        filters.put("color", mapEnumValues(Color.values(), language));
+        filters.put("clothingPart", mapEnumValues(ClothingPart.values(), language));
 
         return filters;
     }
@@ -63,8 +64,10 @@ public class ClothingFacade implements ClothingService {
             return ((Shop) enumValue).toPolish();
         } else if (enumValue instanceof Color) {
             return ((Color) enumValue).toPolish();
+        } else if (enumValue instanceof ClothingPart) {
+            return ((ClothingPart) enumValue).toPolish();
         }
-        return enumValue.name();  // defaultowo zwraca nazwę angielską
+        return enumValue.name();
     }
 
     @Override

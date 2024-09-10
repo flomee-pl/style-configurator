@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.ClothingController;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.ClothingPart;
+import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;
