@@ -16,6 +16,12 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
+springdoc:
+  api-docs:
+    path: /style-configurator/v3/api-docs
+  swagger-ui:
+    path: /style-configurator/swagger-ui.html
+
 db:
   url: localhost:5432/styleconfigurator
   username: ${POSTGRES_USER}
