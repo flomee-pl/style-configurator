@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.domain.outfit.application.exception.NotFoundException;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
+import pl.flomee.styleconfigurator.domain.outfit.application.web.request.DeleteClothingRequest;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.GetOutfitClothes;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.OutfitIdResponse;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
@@ -54,13 +55,18 @@ public class OutfitController implements IOutfitController {
     }
 
     @Override
-    public void updateOutfitPatchById(@PathVariable UUID id, @Validated @RequestBody Outfit outfit) {
+    public void updateOutfitPatchById(@PathVariable UUID id, @RequestBody Outfit outfit) {
         outfitService.patchOutfitById(id, outfit);
     }
 
     @Override
     public void deleteOutfit(@PathVariable UUID id) {
         outfitService.deleteOutfitById(id);
+    }
+
+    @Override
+    public void deleteClothingFromOutfit(UUID outfitId, DeleteClothingRequest request) {
+        outfitService.deleteClothingFromOutfit(outfitId, request.getClothingId());
     }
 
 }

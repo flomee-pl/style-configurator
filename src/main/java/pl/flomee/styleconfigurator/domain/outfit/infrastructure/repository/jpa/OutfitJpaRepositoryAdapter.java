@@ -130,4 +130,17 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
             .orElseThrow(EntityNotFoundException::new);
         return outfitEntity.getClothes().stream().map(clothingMapper::toDomain).toList();
     }
+
+    @Override
+    public void deleteClothingFromOutfit(UUID outfitId, UUID clothingId) {
+        OutfitEntity outfitEntity = outfitJpaRepository.findById(outfitId)
+            .orElseThrow(EntityNotFoundException::new);
+        ClothingEntity clothingEntity = clothingJpaRepository.findById(clothingId)
+            .orElseThrow(EntityNotFoundException::new);
+
+        outfitEntity.getClothes().remove(clothingEntity);
+        clothingEntity.getOutfits().remove(outfitEntity);
+
+        outfitJpaRepository.save(outfitEntity);
+    }
 }

@@ -2,6 +2,7 @@ package pl.flomee.styleconfigurator.domain.outfit.core;
 
 import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
+import pl.flomee.styleconfigurator.domain.outfit.application.web.request.DeleteClothingRequest;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.GetOutfitClothes;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.outgoing.OutfitRepository;
@@ -62,6 +63,11 @@ public class OutfitFacade implements OutfitService {
         return GetOutfitClothes.builder()
             .clothes(outfitRepository.getOutfitClothesById(id))
             .build();
+    }
+
+    @Override
+    public void deleteClothingFromOutfit(UUID outfitId, UUID clothingId) {
+        outfitRepository.deleteClothingFromOutfit(outfitId, clothingId);
     }
 
     private <E extends Enum<E>> List<String> mapEnumValues(E[] enumValues, String language) {

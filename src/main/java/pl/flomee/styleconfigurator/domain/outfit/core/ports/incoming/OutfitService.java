@@ -1,6 +1,7 @@
 package pl.flomee.styleconfigurator.domain.outfit.core.ports.incoming;
 
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
+import pl.flomee.styleconfigurator.domain.outfit.application.web.request.DeleteClothingRequest;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.GetOutfitClothes;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
@@ -28,4 +29,6 @@ public interface OutfitService {
     void addClothesToOutfit(UUID id, AddClothesRequest clothesRequest);
 
     GetOutfitClothes getOutfitClothesById(UUID id);
+
+    void deleteClothingFromOutfit(UUID outfitId, UUID clothingId);
 }

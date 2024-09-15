@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
+import pl.flomee.styleconfigurator.domain.outfit.application.web.request.DeleteClothingRequest;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.GetOutfitClothes;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.OutfitIdResponse;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
@@ -91,7 +92,7 @@ public interface IOutfitController {
     @ResponseStatus(OK)
     void updateOutfitPatchById(
         @Parameter(description = "ID of the outfit to update", required = true) @PathVariable UUID id,
-        @Parameter(description = "Details to update", required = true) @Validated @RequestBody Outfit outfit);
+        @Parameter(description = "Details to update", required = true) @RequestBody Outfit outfit);
 
     @Operation(summary = "Delete an outfit by ID", description = "Delete an outfit by its ID")
     @ApiResponses(value = {
@@ -102,4 +103,16 @@ public interface IOutfitController {
     @ResponseStatus(OK)
     void deleteOutfit(
         @Parameter(description = "ID of the outfit to delete", required = true) @PathVariable UUID id);
+
+
+    @Operation(summary = "Delete clothing from an outfit by ID", description = "Delete clothing from an existing outfit by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Clothing deleted from outfit successfully"),
+        @ApiResponse(responseCode = "404", description = "Outfit or clothing not found")
+    })
+    @DeleteMapping("/clothing/{outfitId}")
+    @ResponseStatus(OK)
+    void deleteClothingFromOutfit(
+        @Parameter(description = "ID of the outfit from which clothing will be deleted", required = true) @PathVariable UUID outfitId,
+        @Parameter(description = "Details about clothing", required = true) @RequestBody DeleteClothingRequest request);
 }
