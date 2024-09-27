@@ -1,4 +1,17 @@
--- Creating the 'clothing' table
+-- Tworzenie tabeli dla ClothingPart
+CREATE TABLE clothing_part
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE shop
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+-- Modyfikacja tabeli clothing, zastąpienie clothing_part VARCHAR relacją
 CREATE TABLE clothing
 (
     clothing_id        UUID PRIMARY KEY,
@@ -6,23 +19,50 @@ CREATE TABLE clothing
     affiliate_link     VARCHAR(255)   NOT NULL,
     clothing_image_url VARCHAR(255)   NOT NULL,
     clothing_name      VARCHAR(255)   NOT NULL,
-    clothing_part      VARCHAR(255)   NOT NULL CHECK (clothing_part IN
-                                                      ('SHIRT', 'PANTS', 'SHOES', 'JACKET', 'DRESS', 'HAT', 'BRACELET',
-                                                       'NECKLACE', 'RING')),
+    clothing_part_id   INT            NOT NULL,
     link               VARCHAR(255)   NOT NULL,
-    shop               VARCHAR(255)   NOT NULL CHECK (shop IN ('ANSWEAR'))
+    shop_id            INT   NOT NULL,
+
+    CONSTRAINT FK_clothing_part
+        FOREIGN KEY (clothing_part_id)
+            REFERENCES clothing_part (id),
+    CONSTRAINT FK_shop
+        FOREIGN KEY (shop_id)
+            REFERENCES shop (id)
 );
 
--- Creating the 'clothing_entity_color' table
-CREATE TABLE clothing_entity_color
+-- Tworzenie tabeli dla Color
+CREATE TABLE color
 (
-    clothing_entity_clothing_id UUID NOT NULL,
-    color                       VARCHAR(255) CHECK (color IN ('BLACK', 'WHITE', 'GREY', 'BLUE', 'RED', 'GREEN')),
-    CONSTRAINT FK_clothing_entity_color_clothing_id
-        FOREIGN KEY (clothing_entity_clothing_id)
-            REFERENCES clothing (clothing_id)
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
 );
--- Creating the 'outfits' table
+
+
+-- Modyfikacja tabeli clothing_entity_color, zastąpienie color VARCHAR relacją
+CREATE TABLE clothing_color
+(
+    clothing_clothing_id UUID NOT NULL,
+    color_id             INT  NOT NULL,
+
+    CONSTRAINT FK_clothing_entity_color_clothing_id
+        FOREIGN KEY (clothing_clothing_id)
+            REFERENCES clothing (clothing_id),
+
+    CONSTRAINT FK_color
+        FOREIGN KEY (color_id)
+            REFERENCES color (id)
+);
+
+-- Tworzenie tabeli dla Sex
+CREATE TABLE sex
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+
+-- Modyfikacja tabeli outfits, zastąpienie sex VARCHAR relacją
 CREATE TABLE outfits
 (
     outfit_id        UUID PRIMARY KEY,
@@ -31,39 +71,54 @@ CREATE TABLE outfits
     description      VARCHAR(255) NOT NULL,
     outfit_image_url VARCHAR(255) NOT NULL,
     outfit_name      VARCHAR(255) NOT NULL,
-    sex              VARCHAR(255) NOT NULL CHECK (sex IN ('MALE', 'FEMALE', 'UNISEX'))
+    sex_id           INT          NOT NULL,
+
+    CONSTRAINT FK_sex
+        FOREIGN KEY (sex_id)
+            REFERENCES sex (id)
 );
 
--- Creating the 'outfit_clothing' table
-CREATE TABLE outfit_clothing
+-- Tworzenie tabeli dla Season
+CREATE TABLE season
 (
-    clothing_id UUID NOT NULL,
-    outfit_id   UUID NOT NULL,
-    CONSTRAINT FK_outfit_clothing_clothing_id
-        FOREIGN KEY (clothing_id)
-            REFERENCES clothing (clothing_id),
-    CONSTRAINT FK_outfit_clothing_outfit_id
-        FOREIGN KEY (outfit_id)
-            REFERENCES outfits (outfit_id)
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
 );
 
--- Creating the 'outfit_entity_season' table
+
+-- Modyfikacja tabeli outfit_entity_season, zastąpienie season VARCHAR relacją
 CREATE TABLE outfit_entity_season
 (
     outfit_entity_outfit_id UUID NOT NULL,
-    season                  VARCHAR(255) CHECK (season IN ('WINTER', 'SPRING', 'SUMMER', 'AUTUMN')),
+    season_id               INT  NOT NULL,
+
     CONSTRAINT FK_outfit_entity_season_outfit_id
         FOREIGN KEY (outfit_entity_outfit_id)
-            REFERENCES outfits (outfit_id)
+            REFERENCES outfits (outfit_id),
+
+    CONSTRAINT FK_season
+        FOREIGN KEY (season_id)
+            REFERENCES season (id)
 );
 
--- Creating the 'outfit_entity_style' table
+-- Tworzenie tabeli dla Style
+CREATE TABLE style
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+-- Modyfikacja tabeli outfit_entity_style, zastąpienie style VARCHAR relacją
 CREATE TABLE outfit_entity_style
 (
     outfit_entity_outfit_id UUID NOT NULL,
-    style                   VARCHAR(255) CHECK (style IN ('CASUAL', 'SPORT', 'ELEGANT', 'STREETWEAR', 'SMART', 'FORMAL')),
+    style_id                INT  NOT NULL,
+
     CONSTRAINT FK_outfit_entity_style_outfit_id
         FOREIGN KEY (outfit_entity_outfit_id)
-            REFERENCES outfits (outfit_id)
-);
+            REFERENCES outfits (outfit_id),
 
+    CONSTRAINT FK_style
+        FOREIGN KEY (style_id)
+            REFERENCES style (id)
+);

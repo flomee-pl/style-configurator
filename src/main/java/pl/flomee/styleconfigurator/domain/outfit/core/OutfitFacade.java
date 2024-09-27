@@ -44,13 +44,9 @@ public class OutfitFacade implements OutfitService {
 
     @Override
     public Map<String, List<String>> listFilters(String language) {
-        Map<String, List<String>> filters = new HashMap<>();
 
-        filters.put("sex", mapEnumValues(Sex.values(), language));
-        filters.put("style", mapEnumValues(Style.values(), language));
-        filters.put("season", mapEnumValues(Season.values(), language));
 
-        return filters;
+        return null;
     }
 
     @Override
@@ -70,20 +66,4 @@ public class OutfitFacade implements OutfitService {
         outfitRepository.deleteClothingFromOutfit(outfitId, clothingId);
     }
 
-    private <E extends Enum<E>> List<String> mapEnumValues(E[] enumValues, String language) {
-        return Arrays.stream(enumValues)
-            .map(value -> "PL".equalsIgnoreCase(language) ? toPolish(value) : value.name())
-            .collect(Collectors.toList());
-    }
-
-    private String toPolish(Enum<?> enumValue) {
-        if (enumValue instanceof Season) {
-            return ((Season) enumValue).toPolish();
-        } else if (enumValue instanceof Sex) {
-            return ((Sex) enumValue).toPolish();
-        } else if (enumValue instanceof Style) {
-            return ((Style) enumValue).toPolish();
-        }
-        return enumValue.name();  // defaultowo zwraca nazwę angielską
-    }
 }

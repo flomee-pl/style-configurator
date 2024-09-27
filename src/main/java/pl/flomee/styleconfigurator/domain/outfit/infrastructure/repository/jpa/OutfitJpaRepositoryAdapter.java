@@ -15,6 +15,7 @@ import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Style;
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.outgoing.OutfitRepository;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitAttributesMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
 
@@ -30,6 +31,7 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     private final OutfitJpaRepository outfitJpaRepository;
     private final ClothingJpaRepository clothingJpaRepository;
     private final ClothingMapper clothingMapper;
+    private final OutfitAttributesMapper outfitAttributesMapper;
 
     @PersistenceContext
     private final EntityManager entityManager;
@@ -87,13 +89,13 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
             outfitEntity.setOutfitImageUrl(outfit.getOutfitImageUrl());
         }
         if (outfit.getSex() != null) {
-            outfitEntity.setSex(outfit.getSex());
+            outfitEntity.setSex(outfitAttributesMapper.toEntity( outfit.getSex()));
         }
         if (outfit.getStyle() != null && !outfit.getStyle().isEmpty()) {
-            outfitEntity.setStyle(outfit.getStyle());
+            outfitEntity.setStyle(outfit.getStyle().stream().map(outfitAttributesMapper::toEntity).toList());
         }
         if (outfit.getSeason() != null && !outfit.getSeason().isEmpty()) {
-            outfitEntity.setSeason(outfit.getSeason());
+            outfitEntity.setSeason(outfit.getSeason().stream().map(outfitAttributesMapper::toEntity).toList());
         }
         if (outfit.getIsActive() != null) {
             outfitEntity.setIsActive(outfit.getIsActive());

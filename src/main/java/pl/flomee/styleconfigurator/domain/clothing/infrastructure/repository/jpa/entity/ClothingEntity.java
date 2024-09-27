@@ -7,6 +7,9 @@ import lombok.*;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.attributes.ClothingPartEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.attributes.ColorEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.attributes.ShopEntity;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
 
 import java.math.BigDecimal;
@@ -44,18 +47,21 @@ public class ClothingEntity {
     @NotBlank
     public String affiliateLink;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    public ClothingPart clothingPart;
+    @ManyToOne
+    @JoinColumn(name = "clothing_part_id", nullable = false)
+    public ClothingPartEntity clothingPart;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    public Shop shop;
+    @ManyToOne
+    @JoinColumn(name = "shop_id", nullable = false)
+    public ShopEntity shop;
 
-    @ElementCollection(targetClass = Color.class)
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    public List<Color> color;
+    @ManyToMany
+    @JoinTable(
+        name = "clothing_color",
+        joinColumns = @JoinColumn(name = "clothing_id"),
+        inverseJoinColumns = @JoinColumn(name = "color_id")
+    )
+    public List<ColorEntity> color;
 
     @ManyToMany(mappedBy = "clothes")
 

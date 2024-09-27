@@ -1,23 +1,15 @@
 package pl.flomee.styleconfigurator.domain.outfit.core.model.attributes;
 
-public enum Season {
-    WINTER,
-    SPRING,
-    SUMMER,
-    AUTUMN;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public String toPolish() {
-        switch (this) {
-            case WINTER:
-                return "ZIMA";
-            case SPRING:
-                return "WIOSNA";
-            case SUMMER:
-                return "LATO";
-            case AUTUMN:
-                return "JESIEŃ";
-            default:
-                return this.name();
-        }
-    }
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class Season {
+    public Long seasonId;
+    public String name;
 }

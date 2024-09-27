@@ -12,6 +12,7 @@ import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.outgoing.ClothingRepository;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.ClothingEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingAttributesMapper;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingMapper;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitMapper;
@@ -31,6 +32,7 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
     private final ClothingJpaRepository clothingJpaRepository;
     private final OutfitJpaRepository outfitJpaRepository;
     private final OutfitMapper outfitMapper;
+    private final ClothingAttributesMapper clothingAttributesMapper;
 
     @PersistenceContext
     private final EntityManager entityManager;
@@ -91,13 +93,13 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
             clothingEntity.setLink(clothing.getLink());
         }
         if (clothing.getClothingPart() != null) {
-            clothingEntity.setClothingPart(clothing.getClothingPart());
+            clothingEntity.setClothingPart(clothingAttributesMapper.toEntity(clothing.getClothingPart()));
         }
         if (clothing.getShop() != null) {
-            clothingEntity.setShop(clothing.getShop());
+            clothingEntity.setShop(clothingAttributesMapper.toEntity(clothing.getShop()));
         }
         if (clothing.getColor() != null && !clothing.getColor().isEmpty()) {
-            clothingEntity.setColor(clothing.getColor());
+            clothingEntity.setColor(clothing.getColor().stream().map(clothingAttributesMapper::toEntity).toList());
         }
         clothingJpaRepository.save(clothingEntity);
 

@@ -10,6 +10,9 @@ import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Style;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.attributes.SeasonEntity;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.attributes.SexEntity;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.attributes.StyleEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,19 +39,25 @@ public class OutfitEntity {
     @NotBlank
     public String outfitImageUrl;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    public Sex sex;
+    @ManyToOne
+    @JoinColumn(name = "sex_id", nullable = false)
+    public SexEntity sex;
 
-    @ElementCollection(targetClass = Style.class)
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    public List<Style> style;
+    @ManyToMany
+    @JoinTable(
+        name = "outfit_style",
+        joinColumns = @JoinColumn(name = "outfit_id"),
+        inverseJoinColumns = @JoinColumn(name = "style_id")
+    )
+    public List<StyleEntity> style;
 
-    @ElementCollection(targetClass = Season.class)
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    public List<Season> season;
+    @ManyToMany
+    @JoinTable(
+        name = "outfit_season",
+        joinColumns = @JoinColumn(name = "outfit_id"),
+        inverseJoinColumns = @JoinColumn(name = "season_id")
+    )
+    public List<SeasonEntity> season;
 
     @NotNull
     public Boolean isActive;

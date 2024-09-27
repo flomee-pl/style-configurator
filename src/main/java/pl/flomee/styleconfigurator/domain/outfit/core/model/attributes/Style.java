@@ -1,29 +1,16 @@
 package pl.flomee.styleconfigurator.domain.outfit.core.model.attributes;
 
-public enum Style {
-    CASUAL,
-    SPORT,
-    ELEGANT,
-    STREETWEAR,
-    SMART,
-    FORMAL;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public String toPolish() {
-        switch (this) {
-            case CASUAL:
-                return "CODZIENNY";
-            case SPORT:
-                return "SPORTOWY";
-            case ELEGANT:
-                return "ELEGANCKI";
-            case STREETWEAR:
-                return "ULICZNY";
-            case SMART:
-                return "SCHLUDNY";
-            case FORMAL:
-                return "FORMALNY";
-            default:
-                return this.name();
-        }
-    }
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class Style {
+    public Long styleId;
+    public String name;
+
 }

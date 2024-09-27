@@ -1,20 +1,15 @@
 package pl.flomee.styleconfigurator.domain.outfit.core.model.attributes;
 
-public enum Sex {
-    MALE,
-    FEMALE,
-    UNISEX;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public String toPolish() {
-        switch (this) {
-            case MALE:
-                return "MĘŻCZYZNA";
-            case FEMALE:
-                return "KOBIETA";
-            case UNISEX:
-                return "UNISEKS";
-            default:
-                return this.name();
-        }
-    }
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class Sex {
+    public Long sexId;
+    public String name;
 }
