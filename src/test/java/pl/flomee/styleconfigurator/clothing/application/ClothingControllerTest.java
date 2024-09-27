@@ -9,14 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.ClothingController;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.ClothingJpaRepositoryAdapter;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

@@ -10,8 +10,10 @@ import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.outgoing.ClothingRepository;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class ClothingFacade implements ClothingService {

@@ -9,5 +9,5 @@ public class SexEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long sexId;
     @Column(nullable = false, unique = true)
-    public String sexName;
+    public String name;
 }

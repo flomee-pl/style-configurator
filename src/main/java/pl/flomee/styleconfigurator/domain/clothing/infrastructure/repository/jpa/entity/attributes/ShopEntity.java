@@ -3,8 +3,6 @@ package pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jp
 
 import jakarta.persistence.*;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "shop")
 public class ShopEntity {
