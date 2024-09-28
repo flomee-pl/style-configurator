@@ -48,8 +48,9 @@ public class ClothingController implements IClothingController {
 
     @Override
     public ClothingIdResponse addClothing(@RequestBody Clothing clothing) {
-        Clothing savedClothing = clothingService.addClothing(clothing);
-        return new ClothingIdResponse(savedClothing.getClothingId());
+        return new ClothingIdResponse(
+            clothingService.addClothing(clothing).getClothingId()
+        );
 
     }
 

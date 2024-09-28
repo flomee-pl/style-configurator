@@ -27,4 +27,7 @@ public interface OutfitAttributesMapper {
     @Mapping(target = "styleId")
     StyleEntity toEntity(Style style);
 
+    @Mapping(target = "styleId")
+    Style toDomain(StyleEntity styleEntity);
+
 }

@@ -8,8 +8,7 @@ import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.outgoing.OutfitRepository;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitAttributesMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitMapper;
-import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.OutfitJpaRepository;
-import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.OutfitJpaRepositoryAdapter;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.*;
 
 @Configuration
 public class OutfitRepositoryConfig {
@@ -17,11 +16,22 @@ public class OutfitRepositoryConfig {
     @Bean
     public OutfitRepository outfitRepository(OutfitMapper outfitMapper,
                                              OutfitJpaRepository outfitJpaRepository,
+                                             SeasonJpaRepository seasonJpaRepository,
+                                             SexJpaRepository sexJpaRepository,
+                                             StyleJpaRepository styleJpaRepository,
                                              ClothingJpaRepository clothingJpaRepository,
                                              ClothingMapper clothingMapper,
                                              OutfitAttributesMapper outfitAttributesMapper,
                                              EntityManager entityManager
     ) {
-        return new OutfitJpaRepositoryAdapter(outfitMapper, outfitJpaRepository, clothingJpaRepository, clothingMapper, outfitAttributesMapper, entityManager);
+        return new OutfitJpaRepositoryAdapter(outfitMapper,
+            outfitJpaRepository,
+            seasonJpaRepository,
+            sexJpaRepository,
+            styleJpaRepository,
+            clothingJpaRepository,
+            clothingMapper,
+            outfitAttributesMapper,
+            entityManager);
     }
 }

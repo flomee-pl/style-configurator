@@ -29,6 +29,9 @@ import java.util.stream.Collectors;
 public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     private final OutfitMapper outfitMapper;
     private final OutfitJpaRepository outfitJpaRepository;
+    private final SeasonJpaRepository seasonJpaRepository;
+    private final SexJpaRepository sexJpaRepository;
+    private final StyleJpaRepository styleJpaRepository;
     private final ClothingJpaRepository clothingJpaRepository;
     private final ClothingMapper clothingMapper;
     private final OutfitAttributesMapper outfitAttributesMapper;
@@ -71,7 +74,20 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
 
     @Override
     public Outfit save(Outfit outfit) {
-        return outfitMapper.toDomain(outfitJpaRepository.save(outfitMapper.toEntity(outfit)));
+        OutfitEntity outfitEntity = outfitMapper.toEntity(outfit);
+        outfitEntity.setSex(
+            sexJpaRepository.findByName(
+                    outfit.getSex().getName())
+                .orElseThrow(EntityNotFoundException::new));
+
+        outfitEntity.setSeason(outfit.getSeason().stream().map(
+            season -> seasonJpaRepository.findByName(season.getName())
+                .orElseThrow(EntityNotFoundException::new)).toList());
+
+        outfitEntity.setStyle(outfit.getStyle().stream().map(
+            style -> styleJpaRepository.findByName(style.getName())
+                .orElseThrow(EntityNotFoundException::new)).toList());
+        return outfitMapper.toDomain(outfitJpaRepository.save(outfitEntity));
     }
 
     @Override

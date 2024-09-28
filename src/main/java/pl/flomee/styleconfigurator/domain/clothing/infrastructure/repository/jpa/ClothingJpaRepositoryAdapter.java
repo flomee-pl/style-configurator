@@ -30,6 +30,9 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
 
     private final ClothingMapper clothingMapper;
     private final ClothingJpaRepository clothingJpaRepository;
+    private final ClothingPartJpaRepository clothingPartJpaRepository;
+    private final ColorJpaRepository colorJpaRepository;
+    private final ShopJpaRepository shopJpaRepository;
     private final OutfitJpaRepository outfitJpaRepository;
     private final OutfitMapper outfitMapper;
     private final ClothingAttributesMapper clothingAttributesMapper;
@@ -73,6 +76,22 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
     @Override
     public Clothing save(Clothing clothing) {
         ClothingEntity clothingEntity = clothingMapper.toEntity(clothing);
+        clothingEntity.setClothingPart(
+            clothingPartJpaRepository.findByName(
+                clothing.getClothingPart().getName()
+            ).orElseThrow(EntityNotFoundException::new));
+
+        clothingEntity.setShop(
+            shopJpaRepository.findByName(
+                clothing.getShop().getName()
+            ).orElseThrow(EntityNotFoundException::new));
+
+        clothingEntity.setColor(clothing.getColor().stream().map(
+                color -> colorJpaRepository.findByName(
+                        color.getName())
+                    .orElseThrow(EntityNotFoundException::new))
+            .toList()
+        );
         return clothingMapper.toDomain(clothingJpaRepository.save(clothingEntity));
     }
 

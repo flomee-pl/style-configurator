@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class ClothingPart {
     public Long clothingPartId;
     public String name;
-
 }

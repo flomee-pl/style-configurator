@@ -19,6 +19,9 @@ VALUES ('BLACK'),
        ('RED'),
        ('GREEN');
 
+INSERT INTO shop (name)
+VALUES ('ANSWEAR');
+
 -- Wstawianie danych do tabeli season
 INSERT INTO season (name)
 VALUES ('WINTER'), ('SPRING'), ('SUMMER'), ('AUTUMN');
