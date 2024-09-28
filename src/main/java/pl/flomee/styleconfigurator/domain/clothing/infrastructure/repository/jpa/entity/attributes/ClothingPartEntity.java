@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class ClothingPartEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long clothingPartId;
 
     @Column(nullable = false, unique = true)

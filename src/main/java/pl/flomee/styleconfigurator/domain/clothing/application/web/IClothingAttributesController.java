@@ -1,19 +1,12 @@
 package pl.flomee.styleconfigurator.domain.clothing.application.web;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
+import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
+import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -21,16 +14,40 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("api/v1/clothing/attributes")
 public interface IClothingAttributesController {
 
-    @Operation(summary = "Get available clothing categories",
-        description = "Retrieve a list of available clothing categories such as colors, shops, and clothing parts",
-        parameters = {
-            @Parameter(name = "language", description = "Language of the category names (PL/EN)", required = false)
-        })
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully retrieved categories",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class)))
-    })
-    @GetMapping
+    @GetMapping("/clothing-parts")
     @ResponseStatus(OK)
-    Map<String, List<String>> getCategories(@RequestParam(required = false, defaultValue = "EN") String language);
+    List<ClothingPart> listClothingParts();
+
+    @PostMapping("/clothing-parts")
+    @ResponseStatus(OK)
+    ClothingPart addClothingPart(@RequestBody ClothingPart clothingPart);
+
+    @DeleteMapping("/clothing-parts/{id}")
+    @ResponseStatus(OK)
+    void deleteClothingPart(@PathVariable Long id);
+
+    @GetMapping("/colors")
+    @ResponseStatus(OK)
+    List<Color> listColors();
+
+    @PostMapping("/colors")
+    @ResponseStatus(OK)
+    Color addColor(@RequestBody Color color);
+
+    @DeleteMapping("/colors/{id}")
+    @ResponseStatus(OK)
+    void deleteColor(@PathVariable Long id);
+
+    @GetMapping("/shops")
+    @ResponseStatus(OK)
+    List<Shop> listShops();
+
+    @PostMapping("/shops")
+    @ResponseStatus(OK)
+    Shop addShop(@RequestBody Shop shop);
+
+    @DeleteMapping("/shops/{id}")
+    @ResponseStatus(OK)
+    void deleteShop(@PathVariable Long id);
+
 }

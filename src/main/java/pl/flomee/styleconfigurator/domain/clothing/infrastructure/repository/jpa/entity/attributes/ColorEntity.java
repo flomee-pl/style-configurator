@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class ColorEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long colorId;
 
     @Column(nullable = false, unique = true)

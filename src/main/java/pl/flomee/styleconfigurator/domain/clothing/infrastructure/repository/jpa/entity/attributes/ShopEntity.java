@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class ShopEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long shopId;
 
     @Column(nullable = false, unique = true)
