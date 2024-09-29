@@ -25,7 +25,7 @@ public class ClothingFacade implements ClothingService {
     }
 
     @Override
-    public List<Clothing> listClothing(ClothingPart clothingPart, Shop shop, List<Color> color) {
+    public List<Clothing> listClothing(List<String> clothingPart, List<String> shop, List<String> color) {
         return clothingRepository.listClothing(clothingPart, shop, color);
     }
 

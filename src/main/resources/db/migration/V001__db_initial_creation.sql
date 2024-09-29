@@ -122,3 +122,15 @@ CREATE TABLE outfit_style
         FOREIGN KEY (style_id)
             REFERENCES style (style_id)
 );
+
+CREATE TABLE outfit_clothing
+(
+    clothing_id UUID NOT NULL,
+    outfit_id   UUID NOT NULL,
+    CONSTRAINT FK_outfit_clothing_clothing_id
+        FOREIGN KEY (clothing_id)
+            REFERENCES clothing (clothing_id),
+    CONSTRAINT FK_outfit_clothing_outfit_id
+        FOREIGN KEY (outfit_id)
+            REFERENCES outfits (outfit_id)
+);

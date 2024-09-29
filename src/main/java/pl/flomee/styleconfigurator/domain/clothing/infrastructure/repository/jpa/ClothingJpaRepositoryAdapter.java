@@ -46,31 +46,13 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
     }
 
     @Override
-    public List<Clothing> listClothing(ClothingPart clothingPart, Shop shop, List<Color> colors) {
+    public List<Clothing> listClothing(List<String> clothingPart, List<String> shop, List<String> colors) {
 
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<ClothingEntity> query = cb.createQuery(ClothingEntity.class);
-        Root<ClothingEntity> clothing = query.from(ClothingEntity.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-
-        if (clothingPart != null) {
-            predicates.add(cb.equal(clothing.get("clothingPart"), clothingPart));
-        }
-        if (shop != null) {
-            predicates.add(cb.equal(clothing.get("shop"), shop));
-        }
-        if (colors != null && !colors.isEmpty()) {
-            Join<ClothingEntity, Color> colorJoin = clothing.join("color");
-            predicates.add(colorJoin.in(colors));
-        }
-
-
-        query.where(cb.and(predicates.toArray(new Predicate[0])));
-
-        List<ClothingEntity> clothingEntities = entityManager.createQuery(query).getResultList();
-
-        return clothingEntities.stream().map(clothingMapper::toDomain).collect(Collectors.toList());
+        return clothingJpaRepository.findByFilters(
+            clothingPart,
+            shop,
+            colors
+        ).stream().map(clothingMapper::toDomain).toList();
     }
 
     @Override
