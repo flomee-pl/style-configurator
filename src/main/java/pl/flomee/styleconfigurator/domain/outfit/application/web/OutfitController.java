@@ -31,11 +31,12 @@ public class OutfitController implements IOutfitController {
 
     @Override
     public List<Outfit> listOutfit(
-        @RequestParam(required = false) Sex sex,
-        @RequestParam(required = false) List<Season> season,
-        @RequestParam(required = false) List<Style> style
+        @RequestParam(required = false) List<String> sex,
+        @RequestParam(required = false) List<String> season,
+        @RequestParam(required = false) List<String> style,
+        @RequestParam(required = false, defaultValue = "false") Boolean nonActive
     ) {
-        return outfitService.listOutfit(sex, season, style);
+        return outfitService.listOutfit(sex, season, style, nonActive);
     }
 
     @Override

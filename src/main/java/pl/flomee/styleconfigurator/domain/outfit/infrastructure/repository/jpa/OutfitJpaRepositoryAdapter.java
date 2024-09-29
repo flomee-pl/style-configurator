@@ -3,7 +3,6 @@ package pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.ClothingJpaRepository;
@@ -11,19 +10,18 @@ import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingMapper;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Style;
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.outgoing.OutfitRepository;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitAttributesMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.attributes.SeasonEntity;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.attributes.SexEntity;
+import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.attributes.StyleEntity;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class OutfitJpaRepositoryAdapter implements OutfitRepository {
@@ -45,31 +43,12 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     }
 
     @Override
-    public List<Outfit> listOutfit(Sex sex, List<Season> season, List<Style> style) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<OutfitEntity> query = cb.createQuery(OutfitEntity.class);
-        Root<OutfitEntity> outfit = query.from(OutfitEntity.class);
+    public List<Outfit> listOutfit(List<String> sex, List<String> season, List<String> style, Boolean nonActive) {
 
-        List<Predicate> predicates = new ArrayList<>();
-
-        if (sex != null) {
-            predicates.add(cb.equal(outfit.get("sex"), sex));
-        }
-        if (season != null && !season.isEmpty()) {
-            Join<OutfitEntity, Season> seasonJoin = outfit.join("season");
-            predicates.add(seasonJoin.in(season));
-        }
-        if (style != null && !style.isEmpty()) {
-            Join<OutfitEntity, Style> styleJoin = outfit.join("style");
-            predicates.add(styleJoin.in(style));
-        }
-
-        query.where(cb.and(predicates.toArray(new Predicate[0])));
-
-        List<OutfitEntity> outfitEntities = entityManager.createQuery(query).getResultList();
-        return outfitEntities.stream()
+        return outfitJpaRepository.findByFilters(sex, season, style, nonActive)
+            .stream()
             .map(outfitMapper::toDomain)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     @Override

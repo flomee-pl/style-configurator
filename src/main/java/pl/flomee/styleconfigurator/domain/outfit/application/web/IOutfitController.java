@@ -44,9 +44,10 @@ public interface IOutfitController {
     @GetMapping
     @ResponseStatus(OK)
     List<Outfit> listOutfit(
-        @Parameter(description = "Filter by sex") @RequestParam(required = false) Sex sex,
-        @Parameter(description = "Filter by season") @RequestParam(required = false) List<Season> season,
-        @Parameter(description = "Filter by style") @RequestParam(required = false) List<Style> style
+        @Parameter(description = "Filter by sex") @RequestParam(required = false) List<String> sex,
+        @Parameter(description = "Filter by season") @RequestParam(required = false) List<String> season,
+        @Parameter(description = "Filter by style") @RequestParam(required = false) List<String> style,
+        @Parameter(description = "True to include nonActive outfits") @RequestParam(required = false, defaultValue = "false") Boolean nonActive
     );
 
     @Operation(summary = "Get clothes for an outfit by ID", description = "Retrieve clothes for an outfit by its ID")
