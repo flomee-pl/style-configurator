@@ -16,9 +16,9 @@ public interface ClothingJpaRepository extends JpaRepository<ClothingEntity, UUI
         "LEFT JOIN c.color cl " +
         "WHERE (:clothingPart IS NULL OR (cp.name IN :clothingPart)) " +
         "AND (:shop IS NULL OR (s.name IN :shop)) " +
-        "AND (:nonActive IS NULL OR (cl.name IN :nonActive))")
+        "AND (:color IS NULL OR (cl.name IN :color))")
     List<ClothingEntity> findByFilters(
         @Param("clothingPart") List<String> clothingPart,
         @Param("shop") List<String> shop,
-        @Param("nonActive") List<String> colors);
+        @Param("color") List<String> color);
 }

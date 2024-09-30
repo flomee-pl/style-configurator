@@ -46,12 +46,12 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
     }
 
     @Override
-    public List<Clothing> listClothing(List<String> clothingPart, List<String> shop, List<String> colors) {
+    public List<Clothing> listClothing(List<String> clothingPart, List<String> shop, List<String> color) {
 
         return clothingJpaRepository.findByFilters(
             clothingPart,
             shop,
-            colors
+            color
         ).stream().map(clothingMapper::toDomain).toList();
     }
 
