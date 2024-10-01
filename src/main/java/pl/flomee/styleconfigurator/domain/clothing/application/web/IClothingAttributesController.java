@@ -14,39 +14,39 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("api/v1/clothing/attributes")
 public interface IClothingAttributesController {
 
-    @GetMapping("/clothing-parts")
+    @GetMapping("/clothingpart")
     @ResponseStatus(OK)
     List<ClothingPart> listClothingParts();
 
-    @PostMapping("/clothing-parts")
+    @PostMapping("/clothingpart")
     @ResponseStatus(OK)
     ClothingPart addClothingPart(@RequestBody ClothingPart clothingPart);
 
-    @DeleteMapping("/clothing-parts/{id}")
+    @DeleteMapping("/clothingpart/{id}")
     @ResponseStatus(OK)
     void deleteClothingPart(@PathVariable Long id);
 
-    @GetMapping("/colors")
+    @GetMapping("/color")
     @ResponseStatus(OK)
     List<Color> listColors();
 
-    @PostMapping("/colors")
+    @PostMapping("/color")
     @ResponseStatus(OK)
     Color addColor(@RequestBody Color color);
 
-    @DeleteMapping("/colors/{id}")
+    @DeleteMapping("/color/{id}")
     @ResponseStatus(OK)
     void deleteColor(@PathVariable Long id);
 
-    @GetMapping("/shops")
+    @GetMapping("/shop")
     @ResponseStatus(OK)
     List<Shop> listShops();
 
-    @PostMapping("/shops")
+    @PostMapping("/shop")
     @ResponseStatus(OK)
     Shop addShop(@RequestBody Shop shop);
 
-    @DeleteMapping("/shops/{id}")
+    @DeleteMapping("/shop/{id}")
     @ResponseStatus(OK)
     void deleteShop(@PathVariable Long id);
 

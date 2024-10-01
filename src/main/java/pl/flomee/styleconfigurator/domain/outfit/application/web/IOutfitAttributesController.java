@@ -14,39 +14,39 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("api/v1/outfit/attributes")
 public interface IOutfitAttributesController {
 
-    @GetMapping("/seasons")
+    @GetMapping("/season")
     @ResponseStatus(OK)
     List<Season> getSeasons();
 
-    @PostMapping("/seasons")
+    @PostMapping("/season")
     @ResponseStatus(OK)
     Season addSeason(@RequestBody Season season);
 
-    @DeleteMapping("/seasons/{id}")
+    @DeleteMapping("/season/{id}")
     @ResponseStatus(OK)
     void deleteSeason(@PathVariable Long id);
 
-    @GetMapping("/sexes")
+    @GetMapping("/sex")
     @ResponseStatus(OK)
     List<Sex> getSexes();
 
-    @PostMapping("/sexes")
+    @PostMapping("/sex")
     @ResponseStatus(OK)
     Sex addSex(@RequestBody Sex sex);
 
-    @DeleteMapping("/sexes/{id}")
+    @DeleteMapping("/sex/{id}")
     @ResponseStatus(OK)
     void deleteSex(@PathVariable Long id);
 
-    @GetMapping("/styles")
+    @GetMapping("/style")
     @ResponseStatus(OK)
     List<Style> getStyles();
 
-    @PostMapping("/styles")
+    @PostMapping("/style")
     @ResponseStatus(OK)
     Style addStyle(@RequestBody Style style);
 
-    @DeleteMapping("/styles/{id}")
+    @DeleteMapping("/style/{id}")
     @ResponseStatus(OK)
     void deleteStyle(@PathVariable Long id);
 
