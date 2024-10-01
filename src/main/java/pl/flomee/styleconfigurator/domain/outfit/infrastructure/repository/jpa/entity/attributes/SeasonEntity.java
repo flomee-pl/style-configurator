@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "season")
 public class SeasonEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long seasonId;
 
     @Column(nullable = false, unique = true)

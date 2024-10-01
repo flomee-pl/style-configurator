@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "style")
 public class StyleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long styleId;
     @Column(nullable = false, unique = true)
     public String name;
