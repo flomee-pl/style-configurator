@@ -3,15 +3,14 @@ package pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jp
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.outgoing.ClothingRepository;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.ClothingEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.attributes.ClothingPartEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.attributes.ColorEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.attributes.ShopEntity;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingAttributesMapper;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingMapper;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
@@ -19,7 +18,6 @@ import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitMap
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.OutfitJpaRepository;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -94,13 +92,26 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
             clothingEntity.setLink(clothing.getLink());
         }
         if (clothing.getClothingPart() != null) {
-            clothingEntity.setClothingPart(clothingAttributesMapper.toEntity(clothing.getClothingPart()));
+            ClothingPartEntity clothingPartEntity =
+                clothingPartJpaRepository.findByName(
+                        clothing.getClothingPart().getName())
+                    .orElseThrow(EntityNotFoundException::new);
+            clothingEntity.setClothingPart(clothingPartEntity);
         }
         if (clothing.getShop() != null) {
-            clothingEntity.setShop(clothingAttributesMapper.toEntity(clothing.getShop()));
+            ShopEntity shopEntity =
+                shopJpaRepository.findByName(
+                        clothing.getShop().getName())
+                    .orElseThrow(EntityNotFoundException::new);
+            clothingEntity.setShop(shopEntity);
         }
         if (clothing.getColor() != null && !clothing.getColor().isEmpty()) {
-            clothingEntity.setColor(clothing.getColor().stream().map(clothingAttributesMapper::toEntity).toList());
+            List<ColorEntity> colorEntities = clothing.getColor().stream().map(
+                    color -> colorJpaRepository.findByName(
+                            color.getName())
+                        .orElseThrow(EntityNotFoundException::new))
+                .toList();
+            clothingEntity.setColor(colorEntities);
         }
         clothingJpaRepository.save(clothingEntity);
 

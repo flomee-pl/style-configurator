@@ -19,7 +19,6 @@ import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.e
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.attributes.StyleEntity;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -84,13 +83,21 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
             outfitEntity.setOutfitImageUrl(outfit.getOutfitImageUrl());
         }
         if (outfit.getSex() != null) {
-            outfitEntity.setSex(outfitAttributesMapper.toEntity( outfit.getSex()));
+            SexEntity sexEntity = sexJpaRepository.findByName(outfit.getSex().getName())
+                .orElseThrow(EntityNotFoundException::new);
+            outfitEntity.setSex(sexEntity);
         }
         if (outfit.getStyle() != null && !outfit.getStyle().isEmpty()) {
-            outfitEntity.setStyle(outfit.getStyle().stream().map(outfitAttributesMapper::toEntity).toList());
+            List<StyleEntity> styleEntities = outfit.getStyle().stream().map(
+                style -> styleJpaRepository.findByName(style.getName())
+                    .orElseThrow(EntityNotFoundException::new)).toList();
+            outfitEntity.setStyle(styleEntities);
         }
         if (outfit.getSeason() != null && !outfit.getSeason().isEmpty()) {
-            outfitEntity.setSeason(outfit.getSeason().stream().map(outfitAttributesMapper::toEntity).toList());
+            List<SeasonEntity> seasonEntities = outfit.getSeason().stream().map(
+                season -> seasonJpaRepository.findByName(season.getName())
+                    .orElseThrow(EntityNotFoundException::new)).toList();
+            outfitEntity.setSeason(seasonEntities);
         }
         if (outfit.getIsActive() != null) {
             outfitEntity.setIsActive(outfit.getIsActive());
