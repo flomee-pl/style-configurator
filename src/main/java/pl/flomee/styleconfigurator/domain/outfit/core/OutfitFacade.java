@@ -24,8 +24,8 @@ public class OutfitFacade implements OutfitService {
     }
 
     @Override
-    public List<Outfit> listOutfit(List<String> sex, List<String> season, List<String> style, Boolean nonActive) {
-        return outfitRepository.listOutfit(sex,season,style, nonActive);
+    public List<Outfit> listOutfit(List<String> sex, List<String> season, List<String> style,List<String> colors, Boolean nonActive) {
+        return outfitRepository.listOutfit(sex,season,style,colors, nonActive);
     }
 
     @Override

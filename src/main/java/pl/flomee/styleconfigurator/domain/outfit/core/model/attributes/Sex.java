@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class Sex {
     public Long sexId;
     public String name;
+    public String polishName;
 }

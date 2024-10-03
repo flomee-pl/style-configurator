@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class Season {
     public Long seasonId;
     public String name;
+    public String polishName;
 }

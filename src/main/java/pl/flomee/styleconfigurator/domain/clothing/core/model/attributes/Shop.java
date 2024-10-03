@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class Shop {
     public Long shopId;
     public String name;
+    public String polishName;
 }

@@ -12,4 +12,6 @@ public class ClothingPartEntity {
 
     @Column(nullable = false, unique = true)
     public String name;
+    @Column(nullable = false, unique = true)
+    public String polishName;
 }

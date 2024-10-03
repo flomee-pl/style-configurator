@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class Color {
     public Long colorId;
     public String name;
+    public String polishName;
 
 }

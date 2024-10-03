@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class Style {
     public Long styleId;
     public String name;
+    public String polishName;
 
 }

@@ -34,9 +34,10 @@ public class OutfitController implements IOutfitController {
         @RequestParam(required = false) List<String> sex,
         @RequestParam(required = false) List<String> season,
         @RequestParam(required = false) List<String> style,
+        @RequestParam(required = false) List<String> color,
         @RequestParam(required = false, defaultValue = "false") Boolean nonActive
     ) {
-        return outfitService.listOutfit(sex, season, style, nonActive);
+        return outfitService.listOutfit(sex, season, style, color, nonActive);
     }
 
     @Override

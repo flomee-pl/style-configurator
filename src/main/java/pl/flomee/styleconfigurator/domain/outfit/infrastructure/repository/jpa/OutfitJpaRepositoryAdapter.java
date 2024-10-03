@@ -42,9 +42,9 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     }
 
     @Override
-    public List<Outfit> listOutfit(List<String> sex, List<String> season, List<String> style, Boolean nonActive) {
+    public List<Outfit> listOutfit(List<String> sex, List<String> season, List<String> style,List<String> colors, Boolean nonActive) {
 
-        return outfitJpaRepository.findByFilters(sex, season, style, nonActive)
+        return outfitJpaRepository.findByFilters(sex, season, style, colors, nonActive)
             .stream()
             .map(outfitMapper::toDomain)
             .toList();

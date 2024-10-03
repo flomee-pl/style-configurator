@@ -1,14 +1,17 @@
 -- Tworzenie tabeli dla ClothingPart
 CREATE TABLE clothing_part
 (
-    clothing_part_id   SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE
+    clothing_part_id SERIAL PRIMARY KEY,
+    name             VARCHAR(255) NOT NULL UNIQUE,
+    polish_name      VARCHAR(255) DEFAULT NULL
 );
 
+-- Tworzenie tabeli dla Shop
 CREATE TABLE shop
 (
-    shop_id   SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE
+    shop_id     SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL UNIQUE,
+    polish_name VARCHAR(255) DEFAULT NULL
 );
 
 -- Modyfikacja tabeli clothing, zastąpienie clothing_part VARCHAR relacją
@@ -34,16 +37,16 @@ CREATE TABLE clothing
 -- Tworzenie tabeli dla Color
 CREATE TABLE color
 (
-    color_id   SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE
+    color_id    SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL UNIQUE,
+    polish_name VARCHAR(255) DEFAULT NULL
 );
-
 
 -- Modyfikacja tabeli clothing_entity_color, zastąpienie color VARCHAR relacją
 CREATE TABLE clothing_color
 (
     clothing_id UUID NOT NULL,
-    color_id             INT  NOT NULL,
+    color_id    INT  NOT NULL,
 
     CONSTRAINT FK_clothing_color_clothing_id
         FOREIGN KEY (clothing_id)
@@ -57,10 +60,10 @@ CREATE TABLE clothing_color
 -- Tworzenie tabeli dla Sex
 CREATE TABLE sex
 (
-    sex_id   SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE
+    sex_id      SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL UNIQUE,
+    polish_name VARCHAR(255) DEFAULT NULL
 );
-
 
 -- Modyfikacja tabeli outfits, zastąpienie sex VARCHAR relacją
 CREATE TABLE outfits
@@ -82,15 +85,15 @@ CREATE TABLE outfits
 CREATE TABLE season
 (
     season_id   SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE
+    name        VARCHAR(255) NOT NULL UNIQUE,
+    polish_name VARCHAR(255) DEFAULT NULL
 );
-
 
 -- Modyfikacja tabeli outfit_entity_season, zastąpienie season VARCHAR relacją
 CREATE TABLE outfit_season
 (
     outfit_id UUID NOT NULL,
-    season_id               INT  NOT NULL,
+    season_id INT  NOT NULL,
 
     CONSTRAINT FK_outfit_season_outfit_id
         FOREIGN KEY (outfit_id)
@@ -104,15 +107,16 @@ CREATE TABLE outfit_season
 -- Tworzenie tabeli dla Style
 CREATE TABLE style
 (
-    style_id   SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE
+    style_id    SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL UNIQUE,
+    polish_name VARCHAR(255) DEFAULT NULL
 );
 
 -- Modyfikacja tabeli outfit_entity_style, zastąpienie style VARCHAR relacją
 CREATE TABLE outfit_style
 (
     outfit_id UUID NOT NULL,
-    style_id                INT  NOT NULL,
+    style_id  INT  NOT NULL,
 
     CONSTRAINT FK_outfit_style_outfit_id
         FOREIGN KEY (outfit_id)

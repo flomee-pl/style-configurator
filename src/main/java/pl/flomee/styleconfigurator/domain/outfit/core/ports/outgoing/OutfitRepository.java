@@ -16,7 +16,7 @@ public interface OutfitRepository {
 
     Optional<Outfit> findById(UUID id);
 
-    List<Outfit> listOutfit(List<String> sex, List<String> season, List<String> style, Boolean nonActive);
+    List<Outfit> listOutfit(List<String> sex, List<String> season, List<String> style,List<String> colors, Boolean nonActive);
 
     Outfit save(Outfit outfit);
 
