@@ -1,8 +1,6 @@
 package pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa;
 
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.ClothingJpaRepository;
@@ -11,7 +9,6 @@ import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.outgoing.OutfitRepository;
-import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitAttributesMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.attributes.SeasonEntity;
@@ -31,10 +28,7 @@ public class OutfitJpaRepositoryAdapter implements OutfitRepository {
     private final StyleJpaRepository styleJpaRepository;
     private final ClothingJpaRepository clothingJpaRepository;
     private final ClothingMapper clothingMapper;
-    private final OutfitAttributesMapper outfitAttributesMapper;
 
-    @PersistenceContext
-    private final EntityManager entityManager;
 
     @Override
     public Optional<Outfit> findById(UUID id) {

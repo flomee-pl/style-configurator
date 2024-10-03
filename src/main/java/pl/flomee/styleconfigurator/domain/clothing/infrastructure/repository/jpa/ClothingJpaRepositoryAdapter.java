@@ -33,10 +33,6 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
     private final ShopJpaRepository shopJpaRepository;
     private final OutfitJpaRepository outfitJpaRepository;
     private final OutfitMapper outfitMapper;
-    private final ClothingAttributesMapper clothingAttributesMapper;
-
-    @PersistenceContext
-    private final EntityManager entityManager;
 
     @Override
     public Optional<Clothing> findById(UUID id) {

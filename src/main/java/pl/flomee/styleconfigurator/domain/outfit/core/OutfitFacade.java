@@ -4,9 +4,6 @@ import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.request.AddClothesRequest;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.GetOutfitClothes;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Style;
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.incoming.OutfitService;
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.outgoing.OutfitRepository;
 

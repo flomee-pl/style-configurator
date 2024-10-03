@@ -20,9 +20,7 @@ public class OutfitRepositoryConfig {
                                              SexJpaRepository sexJpaRepository,
                                              StyleJpaRepository styleJpaRepository,
                                              ClothingJpaRepository clothingJpaRepository,
-                                             ClothingMapper clothingMapper,
-                                             OutfitAttributesMapper outfitAttributesMapper,
-                                             EntityManager entityManager
+                                             ClothingMapper clothingMapper
     ) {
         return new OutfitJpaRepositoryAdapter(outfitMapper,
             outfitJpaRepository,
@@ -30,8 +28,7 @@ public class OutfitRepositoryConfig {
             sexJpaRepository,
             styleJpaRepository,
             clothingJpaRepository,
-            clothingMapper,
-            outfitAttributesMapper,
-            entityManager);
+            clothingMapper
+            );
     }
 }
