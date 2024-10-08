@@ -30,9 +30,9 @@ public class ClothingController implements IClothingController {
 
     @Override
     public List<Clothing> listClothing(
-        @RequestParam(required = false) ClothingPart clothingPart,
-        @RequestParam(required = false) Shop shop,
-        @RequestParam(required = false) List<Color> color
+        @RequestParam(required = false) List<String> clothingPart,
+        @RequestParam(required = false) List<String> shop,
+        @RequestParam(required = false) List<String> color
     ) {
         return clothingService.listClothing(
             clothingPart,
@@ -48,8 +48,9 @@ public class ClothingController implements IClothingController {
 
     @Override
     public ClothingIdResponse addClothing(@RequestBody Clothing clothing) {
-        Clothing savedClothing = clothingService.addClothing(clothing);
-        return new ClothingIdResponse(savedClothing.getClothingId());
+        return new ClothingIdResponse(
+            clothingService.addClothing(clothing).getClothingId()
+        );
 
     }
 

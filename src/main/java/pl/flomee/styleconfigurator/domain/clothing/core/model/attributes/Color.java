@@ -1,29 +1,17 @@
 package pl.flomee.styleconfigurator.domain.clothing.core.model.attributes;
 
-public enum Color {
-    BLACK,
-    WHITE,
-    GREY,
-    BLUE,
-    RED,
-    GREEN;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public String toPolish() {
-        switch (this) {
-            case BLACK:
-                return "CZARNY";
-            case WHITE:
-                return "BIAŁY";
-            case GREY:
-                return "SZARY";
-            case BLUE:
-                return "NIEBIESKI";
-            case RED:
-                return "CZERWONY";
-            case GREEN:
-                return "ZIELONY";
-            default:
-                return this.name();
-        }
-    }
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+public class Color {
+    public Long colorId;
+    public String name;
+    public String polishName;
+
 }

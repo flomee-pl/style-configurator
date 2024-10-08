@@ -1,14 +1,16 @@
 package pl.flomee.styleconfigurator.domain.clothing.core.model.attributes;
 
-public enum Shop {
-    ANSWEAR;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public String toPolish() {
-        switch (this) {
-            case ANSWEAR:
-                return "ANSWEAR";
-            default:
-                return this.name();
-        }
-    }
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class Shop {
+    public Long shopId;
+    public String name;
+    public String polishName;
 }

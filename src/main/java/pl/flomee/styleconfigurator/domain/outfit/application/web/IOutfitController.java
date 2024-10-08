@@ -14,9 +14,6 @@ import pl.flomee.styleconfigurator.domain.outfit.application.web.request.DeleteC
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.GetOutfitClothes;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.OutfitIdResponse;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Style;
 
 import java.util.List;
 import java.util.UUID;
@@ -44,9 +41,11 @@ public interface IOutfitController {
     @GetMapping
     @ResponseStatus(OK)
     List<Outfit> listOutfit(
-        @Parameter(description = "Filter by sex") @RequestParam(required = false) Sex sex,
-        @Parameter(description = "Filter by season") @RequestParam(required = false) List<Season> season,
-        @Parameter(description = "Filter by style") @RequestParam(required = false) List<Style> style
+        @Parameter(description = "Filter by sex") @RequestParam(required = false) List<String> sex,
+        @Parameter(description = "Filter by season") @RequestParam(required = false) List<String> season,
+        @Parameter(description = "Filter by style") @RequestParam(required = false) List<String> style,
+        @Parameter(description = "Filter by colors") @RequestParam(required = false) List<String> color,
+        @Parameter(description = "True to include nonActive outfits") @RequestParam(required = false, defaultValue = "false") Boolean nonActive
     );
 
     @Operation(summary = "Get clothes for an outfit by ID", description = "Retrieve clothes for an outfit by its ID")

@@ -9,9 +9,6 @@ import pl.flomee.styleconfigurator.domain.outfit.application.web.request.DeleteC
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.GetOutfitClothes;
 import pl.flomee.styleconfigurator.domain.outfit.application.web.response.OutfitIdResponse;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Season;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Sex;
-import pl.flomee.styleconfigurator.domain.outfit.core.model.attributes.Style;
 import pl.flomee.styleconfigurator.domain.outfit.core.ports.incoming.OutfitService;
 
 import java.util.List;
@@ -31,11 +28,13 @@ public class OutfitController implements IOutfitController {
 
     @Override
     public List<Outfit> listOutfit(
-        @RequestParam(required = false) Sex sex,
-        @RequestParam(required = false) List<Season> season,
-        @RequestParam(required = false) List<Style> style
+        @RequestParam(required = false) List<String> sex,
+        @RequestParam(required = false) List<String> season,
+        @RequestParam(required = false) List<String> style,
+        @RequestParam(required = false) List<String> color,
+        @RequestParam(required = false, defaultValue = "false") Boolean nonActive
     ) {
-        return outfitService.listOutfit(sex, season, style);
+        return outfitService.listOutfit(sex, season, style, color, nonActive);
     }
 
     @Override

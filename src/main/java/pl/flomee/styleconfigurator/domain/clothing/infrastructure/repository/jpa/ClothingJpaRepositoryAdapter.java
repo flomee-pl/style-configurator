@@ -3,22 +3,21 @@ package pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jp
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.request.AddOutfitsRequest;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.outgoing.ClothingRepository;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.ClothingEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.attributes.ClothingPartEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.attributes.ColorEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.entity.attributes.ShopEntity;
+import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingAttributesMapper;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.mapper.ClothingMapper;
 import pl.flomee.styleconfigurator.domain.outfit.core.model.Outfit;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.mapper.OutfitMapper;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.OutfitJpaRepository;
 import pl.flomee.styleconfigurator.domain.outfit.infrastructure.repository.jpa.entity.OutfitEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,11 +28,11 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
 
     private final ClothingMapper clothingMapper;
     private final ClothingJpaRepository clothingJpaRepository;
+    private final ClothingPartJpaRepository clothingPartJpaRepository;
+    private final ColorJpaRepository colorJpaRepository;
+    private final ShopJpaRepository shopJpaRepository;
     private final OutfitJpaRepository outfitJpaRepository;
     private final OutfitMapper outfitMapper;
-
-    @PersistenceContext
-    private final EntityManager entityManager;
 
     @Override
     public Optional<Clothing> findById(UUID id) {
@@ -41,36 +40,34 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
     }
 
     @Override
-    public List<Clothing> listClothing(ClothingPart clothingPart, Shop shop, List<Color> colors) {
+    public List<Clothing> listClothing(List<String> clothingPart, List<String> shop, List<String> color) {
 
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<ClothingEntity> query = cb.createQuery(ClothingEntity.class);
-        Root<ClothingEntity> clothing = query.from(ClothingEntity.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-
-        if (clothingPart != null) {
-            predicates.add(cb.equal(clothing.get("clothingPart"), clothingPart));
-        }
-        if (shop != null) {
-            predicates.add(cb.equal(clothing.get("shop"), shop));
-        }
-        if (colors != null && !colors.isEmpty()) {
-            Join<ClothingEntity, Color> colorJoin = clothing.join("color");
-            predicates.add(colorJoin.in(colors));
-        }
-
-
-        query.where(cb.and(predicates.toArray(new Predicate[0])));
-
-        List<ClothingEntity> clothingEntities = entityManager.createQuery(query).getResultList();
-
-        return clothingEntities.stream().map(clothingMapper::toDomain).collect(Collectors.toList());
+        return clothingJpaRepository.findByFilters(
+            clothingPart,
+            shop,
+            color
+        ).stream().map(clothingMapper::toDomain).toList();
     }
 
     @Override
     public Clothing save(Clothing clothing) {
         ClothingEntity clothingEntity = clothingMapper.toEntity(clothing);
+        clothingEntity.setClothingPart(
+            clothingPartJpaRepository.findByName(
+                clothing.getClothingPart().getName()
+            ).orElseThrow(EntityNotFoundException::new));
+
+        clothingEntity.setShop(
+            shopJpaRepository.findByName(
+                clothing.getShop().getName()
+            ).orElseThrow(EntityNotFoundException::new));
+
+        clothingEntity.setColor(clothing.getColor().stream().map(
+                color -> colorJpaRepository.findByName(
+                        color.getName())
+                    .orElseThrow(EntityNotFoundException::new))
+            .toList()
+        );
         return clothingMapper.toDomain(clothingJpaRepository.save(clothingEntity));
     }
 
@@ -91,13 +88,26 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
             clothingEntity.setLink(clothing.getLink());
         }
         if (clothing.getClothingPart() != null) {
-            clothingEntity.setClothingPart(clothing.getClothingPart());
+            ClothingPartEntity clothingPartEntity =
+                clothingPartJpaRepository.findByName(
+                        clothing.getClothingPart().getName())
+                    .orElseThrow(EntityNotFoundException::new);
+            clothingEntity.setClothingPart(clothingPartEntity);
         }
         if (clothing.getShop() != null) {
-            clothingEntity.setShop(clothing.getShop());
+            ShopEntity shopEntity =
+                shopJpaRepository.findByName(
+                        clothing.getShop().getName())
+                    .orElseThrow(EntityNotFoundException::new);
+            clothingEntity.setShop(shopEntity);
         }
         if (clothing.getColor() != null && !clothing.getColor().isEmpty()) {
-            clothingEntity.setColor(clothing.getColor());
+            List<ColorEntity> colorEntities = clothing.getColor().stream().map(
+                    color -> colorJpaRepository.findByName(
+                            color.getName())
+                        .orElseThrow(EntityNotFoundException::new))
+                .toList();
+            clothingEntity.setColor(colorEntities);
         }
         clothingJpaRepository.save(clothingEntity);
 

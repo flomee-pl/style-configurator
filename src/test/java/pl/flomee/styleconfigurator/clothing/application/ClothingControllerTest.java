@@ -9,14 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.flomee.styleconfigurator.domain.clothing.application.web.ClothingController;
 import pl.flomee.styleconfigurator.domain.clothing.core.model.Clothing;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.ClothingPart;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Color;
-import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;
 import pl.flomee.styleconfigurator.domain.clothing.infrastructure.repository.jpa.ClothingJpaRepositoryAdapter;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,33 +35,7 @@ class ClothingControllerTest {
 
     @BeforeEach
     void setUp() {
-        Clothing ce1 = Clothing.builder()
-            .clothingId(UUID.randomUUID())
-            .clothingName("Example Clothing")
-            .clothingImageUrl("https://www.example.com/image.jpg")
-            .price(new BigDecimal("100.00"))
-            .link("https://www.example.com")
-            .affiliateLink("https://www.example.com")
-            .clothingPart(ClothingPart.DRESS)
-            .shop(Shop.ANSWEAR)
-            .color(List.of(Color.BLACK, Color.WHITE))
-            .build();
 
-        Clothing ce2 = Clothing.builder()
-            .clothingId(UUID.randomUUID())
-            .clothingName("Example Clothing")
-            .clothingImageUrl("https://www.example.com/image.jpg")
-            .price(new BigDecimal("100.00"))
-            .link("https://www.example.com")
-            .affiliateLink("https://www.example.com")
-            .clothingPart(ClothingPart.DRESS)
-            .shop(Shop.ANSWEAR)
-            .color(List.of(Color.BLACK, Color.GREEN))
-            .build();
-
-        List<Clothing> clothingList = List.of(ce1, ce2);
-
-        given(clothingJpaRepositoryAdapter.findAll()).willReturn(clothingList);
     }
 
 

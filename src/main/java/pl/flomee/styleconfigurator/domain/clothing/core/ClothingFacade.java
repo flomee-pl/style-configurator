@@ -10,8 +10,10 @@ import pl.flomee.styleconfigurator.domain.clothing.core.model.attributes.Shop;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.incoming.ClothingService;
 import pl.flomee.styleconfigurator.domain.clothing.core.ports.outgoing.ClothingRepository;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class ClothingFacade implements ClothingService {
@@ -23,7 +25,7 @@ public class ClothingFacade implements ClothingService {
     }
 
     @Override
-    public List<Clothing> listClothing(ClothingPart clothingPart, Shop shop, List<Color> color) {
+    public List<Clothing> listClothing(List<String> clothingPart, List<String> shop, List<String> color) {
         return clothingRepository.listClothing(clothingPart, shop, color);
     }
 
@@ -44,31 +46,9 @@ public class ClothingFacade implements ClothingService {
 
     @Override
     public Map<String, List<String>> listFilters(String language) {
-        Map<String, List<String>> filters = new HashMap<>();
-
-        filters.put("shop", mapEnumValues(Shop.values(), language));
-        filters.put("color", mapEnumValues(Color.values(), language));
-        filters.put("clothingPart", mapEnumValues(ClothingPart.values(), language));
-
-        return filters;
+        return null;
     }
 
-    private <E extends Enum<E>> List<String> mapEnumValues(E[] enumValues, String language) {
-        return Arrays.stream(enumValues)
-            .map(value -> "PL".equalsIgnoreCase(language) ? toPolish(value) : value.name())
-            .collect(Collectors.toList());
-    }
-
-    private String toPolish(Enum<?> enumValue) {
-        if (enumValue instanceof Shop) {
-            return ((Shop) enumValue).toPolish();
-        } else if (enumValue instanceof Color) {
-            return ((Color) enumValue).toPolish();
-        } else if (enumValue instanceof ClothingPart) {
-            return ((ClothingPart) enumValue).toPolish();
-        }
-        return enumValue.name();
-    }
 
     @Override
     public List<Clothing> saveAll(List<Clothing> clothes) {

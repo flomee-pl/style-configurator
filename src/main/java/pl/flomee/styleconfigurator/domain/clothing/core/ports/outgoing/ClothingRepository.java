@@ -14,10 +14,9 @@ import java.util.UUID;
 public interface ClothingRepository {
     Optional<Clothing> findById(UUID id);
 
-    List<Clothing> listClothing(ClothingPart clothingPart,
-                                Shop shop,
-
-                                List<Color> color
+    List<Clothing> listClothing(List<String> clothingPart,
+                                List<String> shop,
+                                List<String> color
     );
 
     Clothing save(Clothing clothing);

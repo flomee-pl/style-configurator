@@ -44,9 +44,9 @@ public interface IClothingController {
     @GetMapping
     @ResponseStatus(OK)
     List<Clothing> listClothing(
-        @Parameter(description = "Clothing part to filter by") @RequestParam(required = false) ClothingPart clothingPart,
-        @Parameter(description = "Shop to filter by") @RequestParam(required = false) Shop shop,
-        @Parameter(description = "Colors to filter by") @RequestParam(required = false) List<Color> color
+        @Parameter(description = "Clothing part to filter by") @RequestParam(required = false) List<String> clothingPart,
+        @Parameter(description = "Shop to filter by") @RequestParam(required = false) List<String> shop,
+        @Parameter(description = "Colors to filter by") @RequestParam(required = false) List<String> color
     );
 
     @Operation(summary = "Get outfits for clothing", description = "Retrieve a list of outfits for a clothing item by its ID")
