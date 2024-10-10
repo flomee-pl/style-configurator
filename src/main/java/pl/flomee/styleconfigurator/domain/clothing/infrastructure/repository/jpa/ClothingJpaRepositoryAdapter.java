@@ -87,6 +87,9 @@ public class ClothingJpaRepositoryAdapter implements ClothingRepository {
         if (clothing.getLink() != null) {
             clothingEntity.setLink(clothing.getLink());
         }
+        if (clothing.getAffiliateLink() != null) {
+            clothingEntity.setAffiliateLink(clothing.getAffiliateLink());
+        }
         if (clothing.getClothingPart() != null) {
             ClothingPartEntity clothingPartEntity =
                 clothingPartJpaRepository.findByName(
